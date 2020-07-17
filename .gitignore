@@ -1,0 +1,6 @@
+obj/
+bin/
+
+.git/
+.idea/
+.DS_Store
