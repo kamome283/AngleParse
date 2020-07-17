@@ -31,7 +31,7 @@ namespace AngleParse.Resource
 
         public object AsObject()
         {
-            return this;
+            return element;
         }
     }
 }
