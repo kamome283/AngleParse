@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using AngleParse.Resource;
+using AngleSharp.Dom;
 
 namespace AngleParse.Selector
 {
@@ -10,6 +12,17 @@ namespace AngleParse.Selector
 
         public StringSelector(string selector)
         {
+            // Validate selector
+            try
+            {
+                var er = new ElementResource("");
+                er.AsElement().QuerySelectorAll(selector);
+            }
+            catch (DomException e)
+            {
+                throw new TypeInitializationException(e.Name, e);
+            }
+
             this.selector = selector;
         }
 

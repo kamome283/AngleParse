@@ -5,33 +5,37 @@ using AngleParse.Selector;
 using AngleParse.Test.Resource.ElementResource;
 using AngleParse.Test.Resource.StringResource;
 using AngleParse.Test.Selector.StringSelector;
-using AngleSharp.Dom;
 using Xunit;
 
 namespace AngleParse.Test
 {
     public class StringSelectorTest
     {
+        // Should throw TypeInitializationException
+        // private static readonly StringSelector invalidSelector = new InvalidStringSelector();
         private static readonly StringSelector validSelector = new ValidStringSelector();
-        private static readonly StringSelector invalidSelector = new InvalidStringSelector();
         private static readonly StringSelector notMatchingSelector = new NotMatchingStringSelector();
 
-        private static readonly ElementResource validElementResource = new ValidElementResource();
+        // AngleSharp tries to parse even broken HTML, so that never throws exception.
         private static readonly ElementResource invalidElementResource = new InvalidElementResource();
+        private static readonly ElementResource validElementResource = new ValidElementResource();
+        private static readonly ElementResource emptyElementResource = new EmptyElementResource();
         private static readonly StringResource validStringResource = new ValidStringResource();
 
         [Fact]
-        public void SelectByInvalidSelectorThrowsDomException()
+        public void InitializingInvalidSelectorThrowsTypeInitializationException()
         {
-            Assert.Throws<DomException>(() => invalidSelector.Select(validElementResource));
+            Assert.Throws<TypeInitializationException>(() =>
+            {
+                var _ = new InvalidStringSelector();
+            });
         }
 
         [Fact]
         public void SelectByNotMatchingSelectorReturnsEmptySequence()
         {
-            var expected = new string[] { };
             var actual = notMatchingSelector.Select(validElementResource).Select(r => r.AsString());
-            Assert.Equal(expected, actual);
+            Assert.Empty(actual);
         }
 
         [Fact]
@@ -43,17 +47,17 @@ namespace AngleParse.Test
         }
 
         [Fact]
-        public void SelectOnInvalidResourceByInvalidSelectorThrowsDomException()
+        public void SelectOnEmptyResourceReturnsEmptySequence()
         {
-            Assert.Throws<DomException>(() => invalidSelector.Select(invalidElementResource));
+            var actual = validSelector.Select(emptyElementResource).Select(r => r.AsString());
+            Assert.Empty(actual);
         }
 
         [Fact]
         public void SelectOnInvalidResourceReturnsEmptySequence()
         {
-            var expected = new string[] { };
             var actual = validSelector.Select(invalidElementResource).Select(r => r.AsString());
-            Assert.Equal(expected, actual);
+            Assert.Empty(actual);
         }
 
         [Fact]
