@@ -1,4 +1,4 @@
-namespace AngleParse.Test.Selector
+namespace AngleParse.Test.Selector.StringSelector
 {
     public class InvalidStringSelector : AngleParse.Selector.StringSelector
     {

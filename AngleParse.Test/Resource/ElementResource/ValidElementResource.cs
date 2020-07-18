@@ -1,8 +1,6 @@
-using AngleParse.Resource;
-
-namespace AngleParse.Test.Resource
+namespace AngleParse.Test.Resource.ElementResource
 {
-    public class ValidElementResource : ElementResource
+    public class ValidElementResource : AngleParse.Resource.ElementResource
     {
         private static readonly string body = @"
 <div>

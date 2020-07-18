@@ -1,4 +1,4 @@
-namespace AngleParse.Test.Resource
+namespace AngleParse.Test.Resource.ElementResource
 {
     public class InvalidElementResource : AngleParse.Resource.ElementResource
     {

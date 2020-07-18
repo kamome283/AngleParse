@@ -1,8 +1,9 @@
+using System;
 using System.Linq;
 using AngleParse.Resource;
 using AngleParse.Selector;
-using AngleParse.Test.Resource;
-using AngleParse.Test.Selector;
+using AngleParse.Test.Resource.ElementResource;
+using AngleParse.Test.Selector.StringSelector;
 using AngleSharp.Dom;
 using Xunit;
 
@@ -18,7 +19,7 @@ namespace AngleParse.Test
         private readonly ElementResource invalidElementResource = new InvalidElementResource();
 
         [Fact]
-        public void SelectByInvalidSelectorThrowsException()
+        public void SelectByInvalidSelectorThrowsDomException()
         {
             Assert.Throws<DomException>(() => invalidSelector.Select(validElementResource));
         }
@@ -32,7 +33,7 @@ namespace AngleParse.Test
         }
 
         [Fact]
-        public void SelectOnInvalidResourceByInvalidSelectorThrowsException()
+        public void SelectOnInvalidResourceByInvalidSelectorThrowsDomException()
         {
             Assert.Throws<DomException>(() => invalidSelector.Select(invalidElementResource));
         }
