@@ -2,7 +2,7 @@ namespace AngleParse.Test.Resource.ElementResource
 {
     public class EmptyElementResource : AngleParse.Resource.ElementResource
     {
-        private static readonly string body = "";
+        private const string body = "";
 
         public EmptyElementResource() : base(body)
         {

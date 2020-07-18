@@ -2,7 +2,7 @@ namespace AngleParse.Test.Resource.AttrElementResource
 {
     public class ValidAttrElementResource : AngleParse.Resource.ElementResource
     {
-        private static readonly string body = @"
+        private const string body = @"
     <a
         id=""some_id""
         class=""some_class another_class""

@@ -1,8 +1,10 @@
+// ReSharper disable StringLiteralTypo
+
 namespace AngleParse.Test.Resource.ElementResource
 {
     public class ValidElementResource : AngleParse.Resource.ElementResource
     {
-        private static readonly string body = @"
+        private const string body = @"
 <div class=""some_class"">
     <h3><span class=""mw-headline"" id=""Windows_PowerShell_1.0"">Windows PowerShell 1.0</span></h3>
     <p>

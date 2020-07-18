@@ -24,11 +24,11 @@ namespace AngleParse.Selector
 
         public IEnumerable<IResource> Select(IResource resource)
         {
-            IEnumerable<IResource> collectConvert(Match m) =>
+            static IEnumerable<IResource> CollectConvert(Match m) =>
                 m.Groups.Skip(1).Select(c => new StringResource(c.Value));
 
             var body = resource.AsString();
-            return regex.Matches(body).SelectMany(collectConvert);
+            return regex.Matches(body).SelectMany(CollectConvert);
         }
     }
 }

@@ -69,7 +69,7 @@ namespace AngleParse.Test
             var expected = new[]
             {
                 "November", "2006", "Server", "2003", "Server", "2008", "Server", "2016", "Server", "2008", "Server",
-                "2008", "Server", "2012", "Server", "2012",
+                "2008", "Server", "2012", "Server", "2012"
             };
             var actual = validSelector.Select(stringResource).Select(r => r.AsString());
             Assert.Equal(expected, actual);

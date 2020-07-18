@@ -2,7 +2,8 @@ namespace AngleParse.Test.Selector.StringSelector
 {
     public class InvalidStringSelector : AngleParse.Selector.StringSelector
     {
-        public InvalidStringSelector() : base("fjldsel><eeer.::<%%")
+        // ReSharper disable once StringLiteralTypo
+        public InvalidStringSelector() : base("fjldsel><ee.::<%%")
         {
         }
     }

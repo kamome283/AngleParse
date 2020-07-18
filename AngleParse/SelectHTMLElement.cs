@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace AngleParse
+﻿namespace AngleParse
 {
-    public class SelectHTMLElement
+    public class SelectHtmlElement
     {
     }
 }
