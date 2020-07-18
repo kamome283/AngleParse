@@ -20,7 +20,7 @@ namespace AngleParse.Selector
             }
             catch (DomException e)
             {
-                throw new TypeInitializationException(e.Name, e);
+                throw new TypeInitializationException(typeof(StringSelector).FullName, e);
             }
 
             this.selector = selector;

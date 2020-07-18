@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -11,7 +12,14 @@ namespace AngleParse.Selector
 
         public RegexSelector(Regex regex)
         {
-            this.regex = regex;
+            try
+            {
+                this.regex = regex;
+            }
+            catch (TypeInitializationException e)
+            {
+                throw new TypeInitializationException(typeof(RegexSelector).FullName, e);
+            }
         }
 
         public IEnumerable<IResource> Select(IResource resource)
