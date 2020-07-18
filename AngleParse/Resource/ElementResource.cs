@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using AngleSharp;
 using AngleSharp.Dom;
 
@@ -16,7 +18,7 @@ namespace AngleParse.Resource
         {
             var context = BrowsingContext.New(Configuration.Default);
             var doc = context.OpenAsync(req => req.Content(body)).Result;
-            this.element = doc.Body;
+            element = doc.Body.ChildElementCount == 1 ? doc.Body.Children.First() : doc.Body;
         }
 
         public IElement AsElement()
