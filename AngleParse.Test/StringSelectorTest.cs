@@ -35,6 +35,14 @@ namespace AngleParse.Test
         }
 
         [Fact]
+        public void SelectByValidSelectorWorks()
+        {
+            var expected = new[] {"Windows XP SP2", "Windows Server 2003 SP1", "general availability"};
+            var actual = validSelector.Select(validElementResource).Select(r => r.AsString());
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
         public void SelectOnInvalidResourceByInvalidSelectorThrowsDomException()
         {
             Assert.Throws<DomException>(() => invalidSelector.Select(invalidElementResource));
@@ -52,14 +60,6 @@ namespace AngleParse.Test
         public void SelectOnStringResourceThrowsInvalidOperationException()
         {
             Assert.Throws<InvalidOperationException>(() => validSelector.Select(validStringResource));
-        }
-
-        [Fact]
-        public void ValidSelectorOnValidResourceReturnsExpectedValues()
-        {
-            var expected = new[] {"Windows XP SP2", "Windows Server 2003 SP1", "general availability"};
-            var actual = validSelector.Select(validElementResource).Select(r => r.AsString());
-            Assert.Equal(expected, actual);
         }
     }
 }
