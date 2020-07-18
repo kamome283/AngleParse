@@ -26,32 +26,29 @@ namespace AngleParse.Test
         {
             Assert.Throws<TypeInitializationException>(() =>
             {
-                var invalidSelector = new InvalidRegexSelector();
+                var _ = new InvalidRegexSelector();
             });
         }
 
         [Fact]
         public void SelectByNotCapturingSelectorReturnsEmptySequence()
         {
-            var expected = new string[] { };
             var actual = notCapturingSelector.Select(validStringResource).Select(r => r.AsString());
-            Assert.Equal(expected, actual);
+            Assert.Empty(actual);
         }
 
         [Fact]
         public void SelectByNotMatchingSelectorReturnsEmptySequence()
         {
-            var expected = new string[] { };
             var actual = notMatchingSelector.Select(validStringResource).Select(r => r.AsString());
-            Assert.Equal(expected, actual);
+            Assert.Empty(actual);
         }
 
         [Fact]
         public void SelectOnInvalidElementResourceWorks()
         {
-            var expected = new string[] { };
             var actual = validSelector.Select(invalidElementResource).Select(r => r.AsString());
-            Assert.Equal(expected, actual);
+            Assert.Empty(actual);
         }
 
         [Fact]
