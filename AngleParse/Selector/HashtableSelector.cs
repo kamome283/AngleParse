@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +9,7 @@ namespace AngleParse.Selector
     {
         private readonly Dictionary<object, ISelector> table;
 
-        public HashtableSelector(Dictionary<object, ISelector> table)
+        protected HashtableSelector(Dictionary<object, ISelector> table)
         {
             this.table = table;
         }
@@ -30,7 +29,13 @@ namespace AngleParse.Selector
                 // Evaluate earlier for ease of use from PowerShell 
                 p => p.Value.Select(resource).Select(r => r.AsObject()).ToArray()
             );
-            return new IResource[] {new ObjectResource(evaluated)};
+
+            // I decided to return PSCustomObject, but there is no way to create it from C#.
+            // Using ScriptBlock.Create("[pscustomobject] $_") may work well but disrupts testability,
+            // thus decided not to create PSCustomObject here but in the top level.
+            // That will cover most cases and keeps testability.
+            var ht = new Hashtable(evaluated);
+            return new IResource[] {new ObjectResource(ht)};
         }
     }
 }

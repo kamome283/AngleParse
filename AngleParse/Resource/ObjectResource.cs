@@ -13,10 +13,6 @@ namespace AngleParse.Resource
             this.obj = obj;
         }
 
-        public ObjectResource(PSObject pso) : this(pso.BaseObject)
-        {
-        }
-
         public IElement AsElement()
         {
             throw new InvalidOperationException("Cannot operate HTML element required operation on object.");

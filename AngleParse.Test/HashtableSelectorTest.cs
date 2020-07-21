@@ -29,7 +29,7 @@ namespace AngleParse.Test
             var actual = selector.Select(resource);
             Assert.Single(actual);
             var first = actual.First().AsObject();
-            var d = first as Dictionary<object, object[]>;
+            var d = first as Hashtable;
             Assert.NotNull(d);
 
             var redirectLinks = d["redirectLinks"];
@@ -37,7 +37,8 @@ namespace AngleParse.Test
                 {"Windows_XP_SP2", "Windows_Server_2003_SP1", "General_availability"};
             Assert.Equal(redirectLinksExpected, redirectLinks);
 
-            var cls = d["class"];
+            var cls = d["class"] as object[];
+            Assert.NotNull(cls);
             Assert.Empty(cls);
 
             var reference = d["reference"];

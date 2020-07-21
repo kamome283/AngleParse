@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -54,7 +55,7 @@ namespace AngleParse.Test
             var actual = includingHashtableSelector.Select(validResource);
             Assert.Equal(2, actual.Count());
             var first = actual.First().AsObject();
-            var d = first as Dictionary<object, object[]>;
+            var d = first as Hashtable;
             Assert.NotNull(d);
 
             var redirectLinks = d["redirectLinks"];

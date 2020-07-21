@@ -6,6 +6,7 @@ using AngleParse.Selector;
 namespace AngleParse
 {
     [Cmdlet(VerbsCommon.Select, "HtmlContent", HelpUri = "https://github.com/kamome283/AngleParse")]
+    [OutputType(typeof(PSCustomObject))]
     public class SelectHtmlElement : PSCmdlet
     {
         [Parameter(
@@ -27,13 +28,16 @@ HTML content.")]
 
         [Parameter(HelpMessage = @"
 Allow DOM manipulation by content internal scripts.")]
+        [PSDefaultValue(Value = true)]
         public bool DomManipulation { get; set; } = true;
 
         private ISelector InSelector { get; set; }
 
         protected override void BeginProcessing()
         {
-            InSelector = new PipelineSelector(Selector);
+            // See AngleParse.Selector.HashtableSelector.Select() for the reason to add casting script.
+            var psCustomObjectCaster = ScriptBlock.Create("[pscustomobject] $_");
+            InSelector = new PipelineSelector(Selector, psCustomObjectCaster);
         }
 
         protected override void ProcessRecord()
