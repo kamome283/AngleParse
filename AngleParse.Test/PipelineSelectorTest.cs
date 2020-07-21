@@ -54,7 +54,7 @@ namespace AngleParse.Test
             var actual = includingHashtableSelector.Select(validResource);
             Assert.Equal(2, actual.Count());
             var first = actual.First().AsObject();
-            var d = first as Dictionary<object, IEnumerable<object>>;
+            var d = first as Dictionary<object, object[]>;
             Assert.NotNull(d);
 
             var redirectLinks = d["redirectLinks"];

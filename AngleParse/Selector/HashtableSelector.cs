@@ -27,7 +27,8 @@ namespace AngleParse.Selector
         {
             var evaluated = table.ToDictionary(
                 p => p.Key,
-                p => p.Value.Select(resource).Select(r => r.AsObject())
+                // Evaluate earlier for ease of use from PowerShell 
+                p => p.Value.Select(resource).Select(r => r.AsObject()).ToArray()
             );
             return new IResource[] {new ObjectResource(evaluated)};
         }
