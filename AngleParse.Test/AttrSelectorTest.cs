@@ -41,6 +41,16 @@ namespace AngleParse.Test
         }
 
         [Fact]
+        public void SelectElementWorks()
+        {
+            var selector = new AttrSelector(Attr.Element);
+            var actual = selector.Select(validResource);
+            Assert.Single(actual);
+            var first = actual.First();
+            Assert.IsType<ElementResource>(first);
+        }
+
+        [Fact]
         public void SelectHrefWorks()
         {
             AttrTest(Attr.Href, validResource, "https://some_url_in_japan.go.jp");
@@ -68,7 +78,7 @@ namespace AngleParse.Test
         public void SelectNonExistAttributesReturnsEmptySequence()
         {
             foreach (var attr in Enum.GetValues(typeof(Attr)).Cast<Attr>()
-                .Except(new[] {Attr.InnerHtml, Attr.OuterHtml, Attr.TextContent}))
+                .Except(new[] {Attr.Element, Attr.InnerHtml, Attr.OuterHtml, Attr.TextContent}))
             {
                 AttrTest(attr, emptyResource);
             }
@@ -78,7 +88,7 @@ namespace AngleParse.Test
         public void SelectOnBodyElementAttributesReturnsEmptySequence()
         {
             foreach (var attr in Enum.GetValues(typeof(Attr)).Cast<Attr>()
-                .Except(new[] {Attr.InnerHtml, Attr.OuterHtml, Attr.TextContent}))
+                .Except(new[] {Attr.Element, Attr.InnerHtml, Attr.OuterHtml, Attr.TextContent}))
             {
                 AttrTest(attr, bodyResource);
             }

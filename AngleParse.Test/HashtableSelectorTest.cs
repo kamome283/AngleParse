@@ -39,6 +39,10 @@ namespace AngleParse.Test
 
             var cls = d["class"];
             Assert.Empty(cls);
+
+            var reference = d["reference"];
+            var referenceExpected = new object[] {"[58]", "[5]", "[89]", "[90]"};
+            Assert.Equal(referenceExpected, reference);
         }
     }
 }

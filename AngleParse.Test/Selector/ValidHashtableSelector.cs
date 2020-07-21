@@ -17,6 +17,9 @@ namespace AngleParse.Test.Selector
             {
                 "class", new PipelineSelector(Attr.Class)
             },
+            {
+                "reference", new PipelineSelector("sup.reference > a")
+            },
         };
 
         public ValidHashtableSelector() : base(dict)

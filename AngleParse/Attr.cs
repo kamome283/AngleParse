@@ -2,6 +2,7 @@ namespace AngleParse
 {
     public enum Attr
     {
+        Element,
         InnerHtml,
         OuterHtml,
         TextContent,
