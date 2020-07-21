@@ -3,6 +3,7 @@ using System.Linq;
 using AngleParse.Resource;
 using AngleParse.Selector;
 using AngleParse.Test.Resource.ElementResource;
+using AngleParse.Test.Resource.ObjectResource;
 using AngleParse.Test.Resource.StringResource;
 using AngleParse.Test.Selector.StringSelector;
 using Xunit;
@@ -21,14 +22,14 @@ namespace AngleParse.Test
         private static readonly ElementResource validResource = new ValidElementResource();
         private static readonly ElementResource emptyResource = new EmptyElementResource();
         private static readonly StringResource stringResource = new ValidStringResource();
+        private static readonly ObjectResource objResource = new ElementObjectResource();
 
         [Fact]
         public void InitializingInvalidSelectorThrowsTypeInitializationException()
         {
             Assert.Throws<TypeInitializationException>(() =>
-            {
-                var _ = new InvalidStringSelector();
-            });
+                new InvalidStringSelector()
+            );
         }
 
         [Fact]
@@ -61,9 +62,19 @@ namespace AngleParse.Test
         }
 
         [Fact]
+        public void SelectOnObjResourceThrowsInvalidOperationException()
+        {
+            Assert.Throws<InvalidOperationException>(() =>
+                validSelector.Select(objResource)
+            );
+        }
+
+        [Fact]
         public void SelectOnStringResourceThrowsInvalidOperationException()
         {
-            Assert.Throws<InvalidOperationException>(() => validSelector.Select(stringResource));
+            Assert.Throws<InvalidOperationException>(() =>
+                validSelector.Select(stringResource)
+            );
         }
     }
 }

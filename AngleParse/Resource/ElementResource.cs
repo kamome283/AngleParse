@@ -27,7 +27,7 @@ namespace AngleParse.Resource
 
         public string AsString()
         {
-            return element.InnerHtml;
+            return element.TextContent;
         }
 
         public object AsObject()

@@ -4,6 +4,7 @@ using AngleParse.Resource;
 using AngleParse.Selector;
 using AngleParse.Test.Resource.AttrElementResource;
 using AngleParse.Test.Resource.ElementResource;
+using AngleParse.Test.Resource.ObjectResource;
 using AngleParse.Test.Resource.StringResource;
 using Xunit;
 
@@ -15,6 +16,7 @@ namespace AngleParse.Test
         private static readonly ElementResource emptyResource = new EmptyAttrElementResource();
         private static readonly ElementResource bodyResource = new ValidElementResource();
         private static readonly StringResource stringResource = new ValidStringResource();
+        private static readonly ObjectResource objResource = new ElementObjectResource();
 
         private static void AttrTest(Attr attr, IResource resource, params string[] expected)
         {
@@ -27,10 +29,9 @@ namespace AngleParse.Test
         public void InitializingSelectorWithInvalidAttrThrowsTypeInitializationException()
         {
             Assert.Throws<TypeInitializationException>(() =>
-            {
                 // ReSharper disable once BuiltInTypeReferenceStyleForMemberAccess
-                var _ = new AttrSelector((Attr) Int32.MaxValue);
-            });
+                new AttrSelector((Attr) Int32.MaxValue)
+            );
         }
 
         [Fact]
@@ -84,9 +85,19 @@ namespace AngleParse.Test
         }
 
         [Fact]
+        public void SelectOnObjResourceThrowsInvalidOperationException()
+        {
+            Assert.Throws<InvalidOperationException>(() =>
+                AttrTest(Attr.InnerHtml, objResource)
+            );
+        }
+
+        [Fact]
         public void SelectOnStringResourceThrowsInvalidOperationException()
         {
-            Assert.Throws<InvalidOperationException>(() => { AttrTest(Attr.Id, stringResource); });
+            Assert.Throws<InvalidOperationException>(() =>
+                AttrTest(Attr.Id, stringResource)
+            );
         }
 
         [Fact]

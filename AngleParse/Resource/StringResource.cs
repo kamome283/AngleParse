@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 using AngleSharp.Dom;
 
 namespace AngleParse.Resource
@@ -26,5 +29,8 @@ namespace AngleParse.Resource
         {
             return str;
         }
+
+        public static IEnumerable<StringResource> FromMatch(Match m) =>
+            m.Groups.Skip(1).Select(c => new StringResource(c.Value));
     }
 }
