@@ -13,9 +13,10 @@ namespace AngleParse.Resource
             this.element = element;
         }
 
-        public ElementResource(string body)
+        public ElementResource(string body, bool domManipulation = true)
         {
-            var context = BrowsingContext.New(Configuration.Default);
+            var config = domManipulation ? Configuration.Default.WithJs().WithCss() : Configuration.Default;
+            var context = BrowsingContext.New(config);
             var doc = context.OpenAsync(req => req.Content(body)).Result;
             element = doc.Body.ChildElementCount == 1 ? doc.Body.Children.First() : doc.Body;
         }
