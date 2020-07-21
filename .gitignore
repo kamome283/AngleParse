@@ -2,6 +2,7 @@ AngleParse.sln.DotSettings.user
 
 obj/
 bin/
+dist/
 
 .git/
 .idea/
