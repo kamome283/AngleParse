@@ -10,12 +10,12 @@ namespace AngleParse.Test.Selector
         {
             {
                 "redirectLinks", new PipelineSelector(
-                    new AngleParse.Selector.StringSelector("p > a.mw-redirect"),
-                    new AttrSelector(Attr.Href),
-                    new AngleParse.Selector.RegexSelector(new Regex("/wiki/(\\w+)")))
+                    "p > a.mw-redirect",
+                    Attr.Href,
+                    new Regex("/wiki/(\\w+)"))
             },
             {
-                "class", new AttrSelector(Attr.Class)
+                "class", new PipelineSelector(Attr.Class)
             },
         };
 

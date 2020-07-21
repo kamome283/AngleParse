@@ -15,27 +15,38 @@ namespace AngleParse.Test
     {
         private static readonly PipelineSelector validSelector =
             new PipelineSelector(
-                new StringSelector("p > a.mw-redirect"),
-                new AttrSelector(Attr.Href),
-                new RegexSelector(new Regex("/wiki/(\\w+)"))
+                "p > a.mw-redirect",
+                Attr.Href,
+                new Regex("/wiki/(\\w+)")
             );
 
         private static readonly PipelineSelector invalidSelector =
             new PipelineSelector(
-                new StringSelector("p > a.mw-redirect"),
-                new AttrSelector(Attr.Href),
-                new StringSelector("*")
+                "p > a.mw-redirect",
+                Attr.Href,
+                "*"
             );
 
         private static readonly PipelineSelector includingHashtableSelector =
             new PipelineSelector(
-                new StringSelector("> div"),
+                "> div",
                 new ValidHashtableSelector()
             );
 
         private static readonly ElementResource validResource = new ValidElementResource();
         private static readonly ElementResource emptyResource = new EmptyElementResource();
         private static readonly StringResource stringResource = new ValidStringResource();
+
+        [Fact]
+        public void InitializingInvalidSelectorThrowsTypeInitializationException()
+        {
+            Assert.Throws<TypeInitializationException>(() =>
+                new PipelineSelector(
+                    "> div",
+                    Int32.MaxValue
+                )
+            );
+        }
 
         [Fact]
         public void SelectByIncludingHashtableSelectorWorks()

@@ -11,46 +11,16 @@ namespace AngleParse.Selector
 {
     public class PipelineSelector : ISelector
     {
-        private readonly IEnumerable<ISelector> selectors;
+        private readonly ISelector[] selectors;
 
-        public PipelineSelector(params ISelector[] selectors)
+        private PipelineSelector(ISelector[] selectors)
         {
             this.selectors = selectors;
         }
 
-        public PipelineSelector(object[] selectorLikes)
+        public PipelineSelector(params object[] selectorLikes)
         {
-            selectors = selectorLikes.Select(obj => new PipelineSelector(obj));
-        }
-
-        public PipelineSelector(object selectorLike)
-        {
-            switch (selectorLike)
-            {
-                case string s:
-                    selectors = new[] {new StringSelector(s)};
-                    break;
-                case Regex r:
-                    selectors = new[] {new RegexSelector(r)};
-                    break;
-                case Attr a:
-                    selectors = new[] {new AttrSelector(a)};
-                    break;
-                case ScriptBlock sb:
-                    selectors = new[] {new ScriptBlockSelector(sb)};
-                    break;
-                case Hashtable ht:
-                    selectors = new[] {new HashtableSelector(ht)};
-                    break;
-                case object[] objs:
-                    selectors = objs.Select(obj => new PipelineSelector(obj));
-                    break;
-                default:
-                    throw new TypeInitializationException(
-                        typeof(PipelineSelector).FullName,
-                        new ArgumentException(selectorLike.GetType().FullName)
-                    );
-            }
+            selectors = selectorLikes.Select(InitSelector).ToArray();
         }
 
         public IEnumerable<IResource> Select(IResource resource)
@@ -59,6 +29,32 @@ namespace AngleParse.Selector
                 new[] {resource} as IEnumerable<IResource>,
                 (rs, s) => rs.SelectMany(s.Select)
             );
+        }
+
+        private static ISelector InitSelector(object selectorLike)
+        {
+            switch (selectorLike)
+            {
+                case string s:
+                    return new StringSelector(s);
+                case Regex r:
+                    return new RegexSelector(r);
+                case Attr a:
+                    return new AttrSelector(a);
+                case ScriptBlock sb:
+                    return new ScriptBlockSelector(sb);
+                case Hashtable ht:
+                    return new HashtableSelector(ht);
+                case ISelector sl:
+                    return sl;
+                case object[] objs:
+                    return new PipelineSelector(objs.Select(InitSelector).ToArray());
+                default:
+                    throw new TypeInitializationException(
+                        typeof(PipelineSelector).FullName,
+                        new ArgumentException(selectorLike.GetType().FullName)
+                    );
+            }
         }
     }
 }
