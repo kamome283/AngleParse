@@ -32,6 +32,7 @@ class Build : NukeBuild
     Project MainProject => Solution.GetProject("AngleParse");
     Project TestProject => Solution.GetProject("AngleParse.Test");
     AbsolutePath ArtifactsDirectory => RootDirectory / "artifacts";
+    AbsolutePath ModuleDefinition => RootDirectory / "AngleParse.psd1";
 
     Target CleanPublish => _ => _
         .Executes(() =>
@@ -83,9 +84,11 @@ class Build : NukeBuild
         {
             DotNetPublish(s => s
                 .SetProject(MainProject)
-                .SetConfiguration(Configuration)
+                .SetConfiguration(Configuration.Release)
                 .SetOutput(ArtifactsDirectory)
                 .EnableNoRestore());
+
+            CopyFile(ModuleDefinition, ArtifactsDirectory / "AngleParse.psd1");
         });
 
     /// Support plugins are available for:
