@@ -3,7 +3,10 @@ AngleParse.sln.DotSettings.user
 obj/
 bin/
 dist/
+artifacts/
 
 .git/
 .idea/
+.tmp
+
 .DS_Store

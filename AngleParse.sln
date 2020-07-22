@@ -4,12 +4,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AngleParse", "AngleParse\An
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AngleParse.Test", "AngleParse.Test\AngleParse.Test.csproj", "{059000D1-C792-41F1-95DF-185187021F74}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "build\_build.csproj", "{59DB7919-18B6-4150-9BD9-FD449AC8E2BA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{59DB7919-18B6-4150-9BD9-FD449AC8E2BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59DB7919-18B6-4150-9BD9-FD449AC8E2BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8233CD4C-E353-49AE-9509-B6977388ABC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8233CD4C-E353-49AE-9509-B6977388ABC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8233CD4C-E353-49AE-9509-B6977388ABC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
