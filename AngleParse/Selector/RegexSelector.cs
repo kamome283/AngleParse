@@ -25,7 +25,7 @@ namespace AngleParse.Selector
         public IEnumerable<IResource> Select(IResource resource)
         {
             var body = resource.AsString();
-            return regex.Matches(body).SelectMany(StringResource.FromMatch);
+            return regex.Matches(body).Cast<Match>().SelectMany(StringResource.FromMatch);
         }
     }
 }

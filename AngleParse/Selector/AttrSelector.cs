@@ -23,26 +23,38 @@ namespace AngleParse.Selector
 
         public IEnumerable<IResource> Select(IResource resource)
         {
-            static IEnumerable<IResource> Convert(Attr a, IElement e)
+            IEnumerable<IResource> Convert(Attr a, IElement e)
             {
-                static IEnumerable<IResource> ToSeq(string? s) =>
+                IEnumerable<IResource> ToSeq(string s) =>
                     s != null ? new[] {new StringResource(s)} : new IResource[] { };
 
-                return a switch
+                switch (a)
                 {
-                    Attr.Element => new IResource[] {new ObjectResource(e)},
-                    Attr.InnerHtml => ToSeq(e.InnerHtml),
-                    Attr.OuterHtml => ToSeq(e.OuterHtml),
-                    Attr.TextContent => ToSeq(e.TextContent),
-                    Attr.Id => ToSeq(e.Id),
-                    Attr.Class => ToSeq(e.ClassName),
-                    Attr.SplitClasses => e.ClassList.Select(c => new StringResource(c)),
-                    Attr.Href => ToSeq(e.Attributes["href"]?.Value),
-                    Attr.Src => ToSeq(e.Attributes["src"]?.Value),
-                    Attr.Title => ToSeq(e.Attributes["title"]?.Value),
-                    Attr.Name => ToSeq(e.Attributes["name"]?.Value),
-                    _ => throw new InvalidOperationException($"{a} is invalid attr."),
-                };
+                    case Attr.Element:
+                        return new IResource[] {new ObjectResource(e)};
+                    case Attr.InnerHtml:
+                        return ToSeq(e.InnerHtml);
+                    case Attr.OuterHtml:
+                        return ToSeq(e.OuterHtml);
+                    case Attr.TextContent:
+                        return ToSeq(e.TextContent);
+                    case Attr.Id:
+                        return ToSeq(e.Id);
+                    case Attr.Class:
+                        return ToSeq(e.ClassName);
+                    case Attr.SplitClasses:
+                        return e.ClassList.Select(c => new StringResource(c));
+                    case Attr.Href:
+                        return ToSeq(e.Attributes["href"]?.Value);
+                    case Attr.Src:
+                        return ToSeq(e.Attributes["src"]?.Value);
+                    case Attr.Title:
+                        return ToSeq(e.Attributes["title"]?.Value);
+                    case Attr.Name:
+                        return ToSeq(e.Attributes["name"]?.Value);
+                    default:
+                        throw new InvalidOperationException($"{a} is invalid attr.");
+                }
             }
 
             return Convert(attr, resource.AsElement());
