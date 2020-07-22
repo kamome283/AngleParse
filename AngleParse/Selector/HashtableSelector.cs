@@ -26,8 +26,9 @@ namespace AngleParse.Selector
         {
             var evaluated = table.ToDictionary(
                 p => p.Key,
-                // Evaluate earlier for ease of use from PowerShell 
-                p => p.Value.Select(resource).Select(r => r.AsObject()).ToArray()
+                // Evaluate earlier for ease of use from PowerShell
+                // Unify array to simulate PowerShell's behavior.
+                p => Unify(p.Value.Select(resource).Select(r => r.AsObject()).ToArray())
             );
 
             // I decided to return PSCustomObject, but there is no way to create it from C#.
@@ -36,6 +37,19 @@ namespace AngleParse.Selector
             // That will cover most cases and keeps testability.
             var ht = new Hashtable(evaluated);
             return new IResource[] {new ObjectResource(ht)};
+        }
+
+        private static object Unify(object[] objs)
+        {
+            switch (objs.Length)
+            {
+                case 0:
+                    return null;
+                case 1:
+                    return objs.First();
+                default:
+                    return objs;
+            }
         }
     }
 }
