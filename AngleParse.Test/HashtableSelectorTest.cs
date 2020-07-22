@@ -37,9 +37,8 @@ namespace AngleParse.Test
                 {"Windows_XP_SP2", "Windows_Server_2003_SP1", "General_availability"};
             Assert.Equal(redirectLinksExpected, redirectLinks);
 
-            var cls = d["class"] as object[];
-            Assert.NotNull(cls);
-            Assert.Empty(cls);
+            var cls = d["class"];
+            Assert.Null(cls);
 
             var reference = d["reference"];
             var referenceExpected = new object[] {"[58]", "[5]", "[89]", "[90]"};

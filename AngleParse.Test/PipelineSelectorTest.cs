@@ -63,11 +63,11 @@ namespace AngleParse.Test
             Assert.Equal(redirectLinksExpected, redirectLinks);
 
             var cls = d["class"];
-            var clsExpected = new object[] {"some_class"};
+            var clsExpected = "some_class";
             Assert.Equal(cls, clsExpected);
 
             var reference = d["reference"];
-            var referenceExpected = new object[] {"[58]"};
+            var referenceExpected = "[58]";
             Assert.Equal(reference, referenceExpected);
         }
 
