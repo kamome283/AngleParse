@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using AngleParse.Resource;
@@ -44,6 +43,7 @@ namespace AngleParse.Test
             Assert.Throws<TypeInitializationException>(() =>
                 new PipelineSelector(
                     "> div",
+                    // ReSharper disable once BuiltInTypeReferenceStyleForMemberAccess
                     Int32.MaxValue
                 )
             );
@@ -53,21 +53,22 @@ namespace AngleParse.Test
         public void SelectByIncludingHashtableSelectorWorks()
         {
             var actual = includingHashtableSelector.Select(validResource);
-            Assert.Equal(2, actual.Count());
-            var first = actual.First().AsObject();
+            var enumerable = actual as IResource[] ?? actual.ToArray();
+            Assert.Equal(2, enumerable.Length);
+            var first = enumerable.First().AsObject();
             var d = first as Hashtable;
             Assert.NotNull(d);
 
-            var redirectLinks = d["redirectLinks"];
+            var redirectLinks = d?["redirectLinks"];
             var redirectLinksExpected = new object[] {"Windows_XP_SP2", "Windows_Server_2003_SP1"};
             Assert.Equal(redirectLinksExpected, redirectLinks);
 
-            var cls = d["class"];
-            var clsExpected = "some_class";
+            var cls = d?["class"];
+            const string clsExpected = "some_class";
             Assert.Equal(cls, clsExpected);
 
-            var reference = d["reference"];
-            var referenceExpected = "[58]";
+            var reference = d?["reference"];
+            const string referenceExpected = "[58]";
             Assert.Equal(reference, referenceExpected);
         }
 

@@ -1,5 +1,4 @@
 using System;
-using System.Management.Automation;
 using AngleSharp.Dom;
 
 namespace AngleParse.Resource

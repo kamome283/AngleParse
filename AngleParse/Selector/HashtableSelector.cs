@@ -14,6 +14,7 @@ namespace AngleParse.Selector
             this.table = table;
         }
 
+        // ReSharper disable once SuggestBaseTypeForParameter
         public HashtableSelector(Hashtable hashtable)
         {
             table = hashtable.Cast<DictionaryEntry>().ToDictionary(
@@ -39,9 +40,9 @@ namespace AngleParse.Selector
             return new IResource[] {new ObjectResource(ht)};
         }
 
-        private static object Unify(object[] objs)
+        private static object Unify(IReadOnlyCollection<object> objs)
         {
-            switch (objs.Length)
+            switch (objs.Count)
             {
                 case 0:
                     return null;

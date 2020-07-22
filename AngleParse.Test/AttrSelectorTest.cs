@@ -80,9 +80,7 @@ namespace AngleParse.Test
         {
             foreach (var attr in Enum.GetValues(typeof(Attr)).Cast<Attr>()
                 .Except(new[] {Attr.Element, Attr.InnerHtml, Attr.OuterHtml, Attr.TextContent}))
-            {
                 AttrTest(attr, emptyResource);
-            }
         }
 
         [Fact]
@@ -90,9 +88,7 @@ namespace AngleParse.Test
         {
             foreach (var attr in Enum.GetValues(typeof(Attr)).Cast<Attr>()
                 .Except(new[] {Attr.Element, Attr.InnerHtml, Attr.OuterHtml, Attr.TextContent}))
-            {
                 AttrTest(attr, bodyResource);
-            }
         }
 
         [Fact]

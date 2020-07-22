@@ -13,10 +13,8 @@ namespace AngleParse.Selector
         public AttrSelector(Attr attr)
         {
             if (!Enum.IsDefined(typeof(Attr), attr))
-            {
                 throw new TypeInitializationException(typeof(AttrSelector).FullName,
                     new ArgumentException($"{attr} is an invalid Attr."));
-            }
 
             this.attr = attr;
         }
@@ -25,8 +23,10 @@ namespace AngleParse.Selector
         {
             IEnumerable<IResource> Convert(Attr a, IElement e)
             {
-                IEnumerable<IResource> ToSeq(string s) =>
-                    s != null ? new[] {new StringResource(s)} : new IResource[] { };
+                IEnumerable<IResource> ToSeq(string s)
+                {
+                    return s != null ? new[] {new StringResource(s)} : new IResource[] { };
+                }
 
                 switch (a)
                 {

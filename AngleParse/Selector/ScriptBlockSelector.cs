@@ -12,10 +12,10 @@ namespace AngleParse.Selector
 
         public ScriptBlockSelector(ScriptBlock sb)
         {
-            this.sb = sb != null
-                ? sb
-                : throw new TypeInitializationException(nameof(ScriptBlockSelector),
-                    new NullReferenceException());
+            this.sb = sb ?? throw new TypeInitializationException(
+                nameof(ScriptBlockSelector),
+                new NullReferenceException()
+            );
         }
 
         public IEnumerable<IResource> Select(IResource resource)

@@ -1,7 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using AngleParse.Resource;
 using AngleParse.Selector;
 using AngleParse.Test.Resource.ElementResource;
@@ -27,20 +25,21 @@ namespace AngleParse.Test
         public void SelectorWorks()
         {
             var actual = selector.Select(resource);
-            Assert.Single(actual);
-            var first = actual.First().AsObject();
+            var collection = actual as IResource[] ?? actual.ToArray();
+            Assert.Single(collection);
+            var first = collection.First().AsObject();
             var d = first as Hashtable;
             Assert.NotNull(d);
 
-            var redirectLinks = d["redirectLinks"];
+            var redirectLinks = d?["redirectLinks"];
             var redirectLinksExpected = new object[]
                 {"Windows_XP_SP2", "Windows_Server_2003_SP1", "General_availability"};
             Assert.Equal(redirectLinksExpected, redirectLinks);
 
-            var cls = d["class"];
+            var cls = d?["class"];
             Assert.Null(cls);
 
-            var reference = d["reference"];
+            var reference = d?["reference"];
             var referenceExpected = new object[] {"[58]", "[5]", "[89]", "[90]"};
             Assert.Equal(referenceExpected, reference);
         }

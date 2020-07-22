@@ -30,7 +30,9 @@ namespace AngleParse.Resource
             return str;
         }
 
-        public static IEnumerable<StringResource> FromMatch(Match m) =>
-            m.Groups.Cast<Group>().Skip(1).Select(c => new StringResource(c.Value));
+        public static IEnumerable<StringResource> FromMatch(Match m)
+        {
+            return m.Groups.Cast<Group>().Skip(1).Select(c => new StringResource(c.Value));
+        }
     }
 }
