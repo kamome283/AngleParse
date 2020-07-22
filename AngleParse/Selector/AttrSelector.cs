@@ -30,7 +30,7 @@ namespace AngleParse.Selector
 
                 return a switch
                 {
-                    Attr.Element => new IResource[] {new ElementResource(e)},
+                    Attr.Element => new IResource[] {new ObjectResource(e)},
                     Attr.InnerHtml => ToSeq(e.InnerHtml),
                     Attr.OuterHtml => ToSeq(e.OuterHtml),
                     Attr.TextContent => ToSeq(e.TextContent),

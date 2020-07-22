@@ -6,6 +6,7 @@ using AngleParse.Test.Resource.AttrElementResource;
 using AngleParse.Test.Resource.ElementResource;
 using AngleParse.Test.Resource.ObjectResource;
 using AngleParse.Test.Resource.StringResource;
+using AngleSharp.Dom;
 using Xunit;
 
 namespace AngleParse.Test
@@ -47,7 +48,7 @@ namespace AngleParse.Test
             var actual = selector.Select(validResource);
             Assert.Single(actual);
             var first = actual.First();
-            Assert.IsType<ElementResource>(first);
+            Assert.IsAssignableFrom<IElement>(first.AsObject());
         }
 
         [Fact]
