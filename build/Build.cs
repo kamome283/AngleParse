@@ -31,7 +31,7 @@ class Build : NukeBuild
 
     Project MainProject => Solution.GetProject("AngleParse");
     Project TestProject => Solution.GetProject("AngleParse.Test");
-    AbsolutePath ArtifactsDirectory => RootDirectory / "artifacts";
+    AbsolutePath ArtifactsDirectory => RootDirectory / "artifacts" / "AngleParse";
     AbsolutePath ModuleDefinition => RootDirectory / "AngleParse.psd1";
 
     Target CleanPublish => _ => _
