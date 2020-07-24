@@ -47,10 +47,10 @@ Select-HtmlContent "div > span" |
 ```
 When selector outputs single item, output array is unified like PowerShell's default behaviour for ease of use.
 ```powershell
-> iwr "https://b.hatena.ne.jp/" | Select-HtmlContent "div.entrylist-contents", @{ 
->>     Title = "h3.entrylist-contents-title > a"
->>     Tags = "a[rel=tag]"
->> } | select -first 1 | Format-List
+iwr "https://b.hatena.ne.jp/" | Select-HtmlContent "div.entrylist-contents", @{ 
+    Title = "h3.entrylist-contents-title > a"
+    Tags = "a[rel=tag]"
+} | select -first 1 | Format-List
 
 # Title contains only one string item so that array is unified.
 # Title : Go To トラベル　感染を広げないためには(忽那賢志) - 個人 - Y...
