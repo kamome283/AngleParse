@@ -31,11 +31,6 @@ For details, see https://github.com/kamome283/AngleParse
 HTML content.")]
         public string Content { get; set; }
 
-        [Parameter(HelpMessage = @"
-Allow DOM manipulation by content internal scripts.")]
-        [PSDefaultValue(Value = true)]
-        public bool DomManipulation { get; set; } = true;
-
         private ISelector InSelector { get; set; }
 
         protected override void BeginProcessing()
@@ -47,7 +42,7 @@ Allow DOM manipulation by content internal scripts.")]
 
         protected override void ProcessRecord()
         {
-            var resource = new ElementResource(Content, DomManipulation);
+            var resource = new ElementResource(Content);
             WriteObject(
                 InSelector.Select(resource).Select(r => r.AsObject()),
                 true
