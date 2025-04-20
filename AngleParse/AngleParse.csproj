@@ -16,7 +16,12 @@
         <RemoveDir Directories="$(OutDir)" />
     </Target>
     
-    <Target Name="ZipPackage" AfterTargets="Publish">
-        <ZipDirectory DestinationFile="$(OutDir)AngleParse.zip" SourceDirectory="$(OutDir)publish" />
+    <Target Name="RenamePublishDir" AfterTargets="Publish">
+        <ItemGroup>
+            <FilesToMove Include="$(OutDir)publish\*" />
+        </ItemGroup>
+        <MakeDir Directories="$(OutDir)AngleParse"/>
+        <Move SourceFiles="@(FilesToMove)" DestinationFolder="$(OutDir)AngleParse"/>
+        <RemoveDir Directories="$(OutDir)publish" />
     </Target>
 </Project>
