@@ -12,7 +12,7 @@
 RootModule = './AngleParse.dll'
 
 # Version number of this module.
-ModuleVersion = '0.2.0'
+ModuleVersion = '0.3.0'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -54,10 +54,7 @@ Description = 'HTML parsing and processing module'
 # RequiredModules = @()
 
 # Assemblies that must be loaded prior to importing this module
-#RequiredAssemblies = 'AngleParse.dll', 'AngleSharp.dll', 
-#               'System.Management.Automation.dll', 
-#               'System.Runtime.CompilerServices.Unsafe.dll', 
-#               'System.Text.Encoding.CodePages.dll'
+#RequiredAssemblies = @()
 
 # Script files (.ps1) that are run in the caller's environment prior to importing this module.
 # ScriptsToProcess = @()
