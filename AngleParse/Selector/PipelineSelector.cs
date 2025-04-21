@@ -32,27 +32,17 @@ public class PipelineSelector : ISelector
 
     private static ISelector InitSelector(object selectorLike)
     {
-        switch (selectorLike)
+        return selectorLike switch
         {
-            case string s:
-                return new StringSelector(s);
-            case Regex r:
-                return new RegexSelector(r);
-            case Attr a:
-                return new AttrSelector(a);
-            case ScriptBlock sb:
-                return new ScriptBlockSelector(sb);
-            case Hashtable ht:
-                return new HashtableSelector(ht);
-            case ISelector sl:
-                return sl;
-            case object[] objs:
-                return new PipelineSelector(objs.Select(InitSelector).ToArray());
-            default:
-                throw new TypeInitializationException(
-                    typeof(PipelineSelector).FullName,
-                    new ArgumentException(selectorLike.GetType().FullName)
-                );
-        }
+            string s => new StringSelector(s),
+            Regex r => new RegexSelector(r),
+            Attr a => new AttrSelector(a),
+            ScriptBlock sb => new ScriptBlockSelector(sb),
+            Hashtable ht => new HashtableSelector(ht),
+            ISelector sl => sl,
+            object[] objs => new PipelineSelector(objs.Select(InitSelector).ToArray()),
+            _ => throw new TypeInitializationException(typeof(PipelineSelector).FullName,
+                new ArgumentException(selectorLike.GetType().FullName))
+        };
     }
 }
