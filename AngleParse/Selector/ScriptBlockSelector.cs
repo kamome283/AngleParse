@@ -6,17 +6,12 @@ using AngleParse.Resource;
 
 namespace AngleParse.Selector;
 
-public class ScriptBlockSelector : ISelector
+public class ScriptBlockSelector(ScriptBlock sb) : ISelector
 {
-    private readonly ScriptBlock _sb;
-
-    public ScriptBlockSelector(ScriptBlock sb)
-    {
-        _sb = sb ?? throw new TypeInitializationException(
-            nameof(ScriptBlockSelector),
-            new NullReferenceException()
-        );
-    }
+    private readonly ScriptBlock _sb = sb ?? throw new TypeInitializationException(
+        nameof(ScriptBlockSelector),
+        new NullReferenceException()
+    );
 
     public IEnumerable<IResource> Select(IResource resource)
     {

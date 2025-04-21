@@ -4,7 +4,7 @@ using AngleParse.Selector;
 
 namespace AngleParse.Test.Selector;
 
-public class ValidHashtableSelector : HashtableSelector
+public class ValidHashtableSelector() : HashtableSelector(Dict)
 {
     private static readonly Dictionary<object, ISelector> Dict = new()
     {
@@ -21,8 +21,4 @@ public class ValidHashtableSelector : HashtableSelector
             "reference", new PipelineSelector("sup.reference > a")
         }
     };
-
-    public ValidHashtableSelector() : base(Dict)
-    {
-    }
 }
