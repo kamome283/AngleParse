@@ -59,15 +59,15 @@ public class PipelineSelectorTest
         var d = first as Hashtable;
         Assert.NotNull(d);
 
-        var redirectLinks = d?["redirectLinks"];
+        var redirectLinks = d["redirectLinks"];
         var redirectLinksExpected = new object[] { "Windows_XP_SP2", "Windows_Server_2003_SP1" };
         Assert.Equal(redirectLinksExpected, redirectLinks);
 
-        var cls = d?["class"];
+        var cls = d["class"];
         const string clsExpected = "some_class";
         Assert.Equal(cls, clsExpected);
 
-        var reference = d?["reference"];
+        var reference = d["reference"];
         const string referenceExpected = "[58]";
         Assert.Equal(reference, referenceExpected);
     }
