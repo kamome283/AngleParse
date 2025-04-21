@@ -17,8 +17,7 @@ public class HashtableSelector : ISelector
     public HashtableSelector(Hashtable hashtable)
     {
         _table = hashtable.Cast<DictionaryEntry>().ToDictionary(
-            p => p.Key,
-            p => new PipelineSelector(p.Value) as ISelector
+            p => p.Key, ISelector (p) => new PipelineSelector(p.Value)
         );
     }
 
