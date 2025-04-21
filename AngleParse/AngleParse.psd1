@@ -12,7 +12,7 @@
     RootModule = './AngleParse.dll'
 
     # Version number of this module.
-    ModuleVersion = '0.3.0'
+    ModuleVersion = '0.3.1'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -107,7 +107,7 @@
             # IconUri = ''
 
             # ReleaseNotes of this module
-            # ReleaseNotes = ''
+            ReleaseNotes = 'Performed internal code cleanup and mechanical refactoring based on static analysis and IDE suggestions. This release does not introduce any changes to public functionality or behavior.'
 
             # Prerelease string of this module
             # Prerelease = ''
