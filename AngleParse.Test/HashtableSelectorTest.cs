@@ -18,7 +18,7 @@ public class HashtableSelectorTest
     public void InitializingFromHashtableWorks()
     {
         var ht = new Hashtable { { "class", Attr.Class } };
-        var _ = new HashtableSelector(ht);
+        _ = new HashtableSelector(ht);
     }
 
     [Fact]
