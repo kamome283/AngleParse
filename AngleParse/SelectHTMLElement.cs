@@ -26,7 +26,7 @@ public class SelectHtmlElement : PSCmdlet
         HelpMessage = "HTML content.")]
     public string Content { get; set; }
 
-    private ISelector InSelector { get; set; }
+    private PipelineSelector InSelector { get; set; }
 
     protected override void BeginProcessing()
     {

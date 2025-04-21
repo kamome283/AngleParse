@@ -39,9 +39,9 @@ public class HashtableSelector : ISelector
         return [new ObjectResource(ht)];
     }
 
-    private static object Unify(IReadOnlyCollection<object> objs)
+    private static object Unify(object[] objs)
     {
-        switch (objs.Count)
+        switch (objs.Length)
         {
             case 0:
                 return null;
