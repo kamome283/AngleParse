@@ -1,11 +1,10 @@
-namespace AngleParse.Test.Resource.ElementResource
-{
-    public class EmptyElementResource : AngleParse.Resource.ElementResource
-    {
-        private const string body = "";
+namespace AngleParse.Test.Resource.ElementResource;
 
-        public EmptyElementResource() : base(body)
-        {
-        }
+public class EmptyElementResource : AngleParse.Resource.ElementResource
+{
+    private const string Body = "";
+
+    public EmptyElementResource() : base(Body)
+    {
     }
 }
