@@ -12,18 +12,18 @@ public class SelectHtmlElement : PSCmdlet
     [Parameter(
         Mandatory = true,
         Position = 0,
-        HelpMessage = @"
-Selector to select and process data in the content.
-For details, see https://github.com/kamome283/AngleParse
-")]
+        HelpMessage =
+            """
+            Selector to select and process data in the content.
+            For details, see https://github.com/kamome283/AngleParse
+            """)]
     public object[] Selector { get; set; }
 
     [Parameter(
         Position = 1,
         ValueFromPipeline = true,
         ValueFromPipelineByPropertyName = true,
-        HelpMessage = @"
-HTML content.")]
+        HelpMessage = "HTML content.")]
     public string Content { get; set; }
 
     private ISelector InSelector { get; set; }

@@ -66,7 +66,7 @@ public class AttrSelectorTest
     [Fact]
     public void SelectInnerHtmlWorks()
     {
-        AttrTest(Attr.InnerHtml, EmptyResource, @"Some text and <a>some link</a>.");
+        AttrTest(Attr.InnerHtml, EmptyResource, "Some text and <a>some link</a>.");
     }
 
     [Fact]
@@ -110,7 +110,7 @@ public class AttrSelectorTest
     [Fact]
     public void SelectOuterHtmlWorks()
     {
-        AttrTest(Attr.OuterHtml, EmptyResource, @"<p>Some text and <a>some link</a>.</p>");
+        AttrTest(Attr.OuterHtml, EmptyResource, "<p>Some text and <a>some link</a>.</p>");
     }
 
     [Fact]
