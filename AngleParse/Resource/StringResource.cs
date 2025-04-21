@@ -6,15 +6,8 @@ using AngleSharp.Dom;
 
 namespace AngleParse.Resource;
 
-public class StringResource : IResource
+public class StringResource(string str) : IResource
 {
-    private readonly string _str;
-
-    public StringResource(string str)
-    {
-        _str = str;
-    }
-
     public IElement AsElement()
     {
         throw new InvalidOperationException("Cannot operate HTML element required operation on string.");
@@ -22,12 +15,12 @@ public class StringResource : IResource
 
     public string AsString()
     {
-        return _str;
+        return str;
     }
 
     public object AsObject()
     {
-        return _str;
+        return str;
     }
 
     public static IEnumerable<StringResource> FromMatch(Match m)

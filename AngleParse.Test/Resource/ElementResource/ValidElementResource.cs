@@ -2,7 +2,7 @@
 
 namespace AngleParse.Test.Resource.ElementResource;
 
-public class ValidElementResource : AngleParse.Resource.ElementResource
+public class ValidElementResource() : AngleParse.Resource.ElementResource(Body)
 {
     private const string Body = @"
 <div class=""some_class"">
@@ -39,8 +39,4 @@ public class ValidElementResource : AngleParse.Resource.ElementResource
     </p>
 </div>
 ";
-
-    public ValidElementResource() : base(Body)
-    {
-    }
 }

@@ -1,6 +1,6 @@
 namespace AngleParse.Test.Resource.AttrElementResource;
 
-public class ValidAttrElementResource : AngleParse.Resource.ElementResource
+public class ValidAttrElementResource() : AngleParse.Resource.ElementResource(Body)
 {
     private const string Body = @"
     <a
@@ -14,8 +14,4 @@ public class ValidAttrElementResource : AngleParse.Resource.ElementResource
         some link
     </a>
 ";
-
-    public ValidAttrElementResource() : base(Body)
-    {
-    }
 }

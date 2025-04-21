@@ -1,6 +1,6 @@
 namespace AngleParse.Test.Resource.StringResource;
 
-public class ValidStringResource : AngleParse.Resource.StringResource
+public class ValidStringResource() : AngleParse.Resource.StringResource(Str)
 {
     private const string Str = @"
 Windows PowerShell 1.0
@@ -14,8 +14,4 @@ The LocalAccounts module allows for adding/removing local user accounts.[86]
 A preview for PowerShell 5.1 was released for Windows 7, Windows Server 2008, Windows Server 2008 R2, Windows Server 2012,
 and Windows Server 2012 R2 on July 16, 2016,[87] and was released on January 19, 2017.[88] 
 ";
-
-    public ValidStringResource() : base(Str)
-    {
-    }
 }
