@@ -48,7 +48,7 @@ public class AttrSelectorTest
         var actual = selector.Select(ValidResource).ToList();
         Assert.Single(actual);
         var first = actual.First();
-        Assert.IsAssignableFrom<IElement>(first.AsObject());
+        Assert.IsType<IElement>(first.AsObject(), false);
     }
 
     [Fact]
