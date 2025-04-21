@@ -25,7 +25,7 @@ public class AttrSelector : ISelector
         {
             IEnumerable<IResource> ToSeq(string s)
             {
-                return s != null ? new[] { new StringResource(s) } : new IResource[] { };
+                return s != null ? new[] { new StringResource(s) } : Array.Empty<IResource>();
             }
 
             switch (a)
