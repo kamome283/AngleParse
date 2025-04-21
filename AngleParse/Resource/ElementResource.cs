@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using AngleSharp;
 using AngleSharp.Dom;
@@ -18,6 +19,7 @@ public class ElementResource : IResource
         var config = Configuration.Default;
         var context = BrowsingContext.New(config);
         var doc = context.OpenAsync(req => req.Content(body)).Result;
+        if (doc.Body is null) throw new InvalidOperationException("The document does not contain a <body> element.");
         _element = doc.Body.ChildElementCount == 1 ? doc.Body.Children.First() : doc.Body;
     }
 
