@@ -1,9 +1,8 @@
-namespace AngleParse.Test.Selector.StringSelector
+namespace AngleParse.Test.Selector.StringSelector;
+
+public class ValidStringSelector : AngleParse.Selector.StringSelector
 {
-    public class ValidStringSelector : AngleParse.Selector.StringSelector
+    public ValidStringSelector() : base("p > a.mw-redirect")
     {
-        public ValidStringSelector() : base("p > a.mw-redirect")
-        {
-        }
     }
 }

@@ -1,30 +1,29 @@
 using System;
 using AngleSharp.Dom;
 
-namespace AngleParse.Resource
+namespace AngleParse.Resource;
+
+public class ObjectResource : IResource
 {
-    public class ObjectResource : IResource
+    private readonly object _obj;
+
+    public ObjectResource(object obj)
     {
-        private readonly object obj;
+        _obj = obj;
+    }
 
-        public ObjectResource(object obj)
-        {
-            this.obj = obj;
-        }
+    public IElement AsElement()
+    {
+        throw new InvalidOperationException("Cannot operate HTML element required operation on object.");
+    }
 
-        public IElement AsElement()
-        {
-            throw new InvalidOperationException("Cannot operate HTML element required operation on object.");
-        }
+    public string AsString()
+    {
+        throw new InvalidOperationException("Cannot operate string required operation on object");
+    }
 
-        public string AsString()
-        {
-            throw new InvalidOperationException("Cannot operate string required operation on object");
-        }
-
-        public object AsObject()
-        {
-            return obj;
-        }
+    public object AsObject()
+    {
+        return _obj;
     }
 }

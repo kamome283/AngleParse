@@ -6,22 +6,22 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="AngleSharp" Version="1.3.0" />
-        <PackageReference Include="System.Management.Automation" Version="7.4.7" PrivateAssets="All" />
-        <Content CopyToPublishDirectory="Always" Include="AngleParse.psd1" />
+        <PackageReference Include="AngleSharp" Version="1.3.0"/>
+        <PackageReference Include="System.Management.Automation" Version="7.4.7" PrivateAssets="All"/>
+        <Content CopyToPublishDirectory="Always" Include="AngleParse.psd1"/>
     </ItemGroup>
 
     <!-- Target with BeforeTargets="Publish" seems to run after the publish in my environment.-->
     <Target Name="CleanPublishDir" AfterTargets="Build" Condition="'$(_IsPublishing)' == 'true'">
-        <RemoveDir Directories="$(OutDir)" />
+        <RemoveDir Directories="$(OutDir)"/>
     </Target>
-    
+
     <Target Name="RenamePublishDir" AfterTargets="Publish">
         <ItemGroup>
-            <FilesToMove Include="$(OutDir)publish\*" />
+            <FilesToMove Include="$(OutDir)publish\*"/>
         </ItemGroup>
         <MakeDir Directories="$(OutDir)AngleParse"/>
         <Move SourceFiles="@(FilesToMove)" DestinationFolder="$(OutDir)AngleParse"/>
-        <RemoveDir Directories="$(OutDir)publish" />
+        <RemoveDir Directories="$(OutDir)publish"/>
     </Target>
 </Project>

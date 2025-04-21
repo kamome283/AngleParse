@@ -4,35 +4,34 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using AngleSharp.Dom;
 
-namespace AngleParse.Resource
+namespace AngleParse.Resource;
+
+public class StringResource : IResource
 {
-    public class StringResource : IResource
+    private readonly string _str;
+
+    public StringResource(string str)
     {
-        private readonly string str;
+        _str = str;
+    }
 
-        public StringResource(string str)
-        {
-            this.str = str;
-        }
+    public IElement AsElement()
+    {
+        throw new InvalidOperationException("Cannot operate HTML element required operation on string.");
+    }
 
-        public IElement AsElement()
-        {
-            throw new InvalidOperationException("Cannot operate HTML element required operation on string.");
-        }
+    public string AsString()
+    {
+        return _str;
+    }
 
-        public string AsString()
-        {
-            return str;
-        }
+    public object AsObject()
+    {
+        return _str;
+    }
 
-        public object AsObject()
-        {
-            return str;
-        }
-
-        public static IEnumerable<StringResource> FromMatch(Match m)
-        {
-            return m.Groups.Cast<Group>().Skip(1).Select(c => new StringResource(c.Value));
-        }
+    public static IEnumerable<StringResource> FromMatch(Match m)
+    {
+        return m.Groups.Cast<Group>().Skip(1).Select(c => new StringResource(c.Value));
     }
 }

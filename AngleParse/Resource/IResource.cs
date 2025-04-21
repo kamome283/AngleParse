@@ -1,11 +1,10 @@
 using AngleSharp.Dom;
 
-namespace AngleParse.Resource
+namespace AngleParse.Resource;
+
+public interface IResource
 {
-    public interface IResource
-    {
-        IElement AsElement();
-        string AsString();
-        object AsObject();
-    }
+    IElement AsElement();
+    string AsString();
+    object AsObject();
 }

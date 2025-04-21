@@ -4,26 +4,25 @@ using System.Linq;
 using System.Management.Automation;
 using AngleParse.Resource;
 
-namespace AngleParse.Selector
+namespace AngleParse.Selector;
+
+public class ScriptBlockSelector : ISelector
 {
-    public class ScriptBlockSelector : ISelector
+    private readonly ScriptBlock _sb;
+
+    public ScriptBlockSelector(ScriptBlock sb)
     {
-        private readonly ScriptBlock sb;
+        _sb = sb ?? throw new TypeInitializationException(
+            nameof(ScriptBlockSelector),
+            new NullReferenceException()
+        );
+    }
 
-        public ScriptBlockSelector(ScriptBlock sb)
-        {
-            this.sb = sb ?? throw new TypeInitializationException(
-                nameof(ScriptBlockSelector),
-                new NullReferenceException()
-            );
-        }
-
-        public IEnumerable<IResource> Select(IResource resource)
-        {
-            return sb.InvokeWithContext(
-                new Dictionary<string, ScriptBlock>(),
-                new List<PSVariable> {new PSVariable("_", resource.AsObject())}
-            ).Select(pso => new ObjectResource(pso));
-        }
+    public IEnumerable<IResource> Select(IResource resource)
+    {
+        return _sb.InvokeWithContext(
+            new Dictionary<string, ScriptBlock>(),
+            [new PSVariable("_", resource.AsObject())]
+        ).Select(pso => new ObjectResource(pso));
     }
 }

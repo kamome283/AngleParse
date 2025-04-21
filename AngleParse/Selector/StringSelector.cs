@@ -4,31 +4,30 @@ using System.Linq;
 using AngleParse.Resource;
 using AngleSharp.Dom;
 
-namespace AngleParse.Selector
+namespace AngleParse.Selector;
+
+public class StringSelector : ISelector
 {
-    public class StringSelector : ISelector
+    private readonly string _selector;
+
+    public StringSelector(string selector)
     {
-        private readonly string selector;
-
-        public StringSelector(string selector)
+        // Validate selector
+        try
         {
-            // Validate selector
-            try
-            {
-                var er = new ElementResource("");
-                er.AsElement().QuerySelectorAll(selector);
-            }
-            catch (DomException e)
-            {
-                throw new TypeInitializationException(typeof(StringSelector).FullName, e);
-            }
-
-            this.selector = selector;
+            var er = new ElementResource("");
+            er.AsElement().QuerySelectorAll(selector);
+        }
+        catch (DomException e)
+        {
+            throw new TypeInitializationException(typeof(StringSelector).FullName, e);
         }
 
-        public IEnumerable<IResource> Select(IResource resource)
-        {
-            return resource.AsElement().QuerySelectorAll(selector).Select(e => new ElementResource(e));
-        }
+        _selector = selector;
+    }
+
+    public IEnumerable<IResource> Select(IResource resource)
+    {
+        return resource.AsElement().QuerySelectorAll(_selector).Select(e => new ElementResource(e));
     }
 }

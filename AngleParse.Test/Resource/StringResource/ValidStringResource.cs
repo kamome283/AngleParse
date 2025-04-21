@@ -1,8 +1,8 @@
-namespace AngleParse.Test.Resource.StringResource
+namespace AngleParse.Test.Resource.StringResource;
+
+public class ValidStringResource : AngleParse.Resource.StringResource
 {
-    public class ValidStringResource : AngleParse.Resource.StringResource
-    {
-        private const string str = @"
+    private const string Str = @"
 Windows PowerShell 1.0
 PowerShell 1.0 was released in November 2006 for Windows XP SP2, Windows Server 2003 SP1 and Windows Vista.[58]
 It is an optional component of Windows Server 2008.
@@ -15,8 +15,7 @@ A preview for PowerShell 5.1 was released for Windows 7, Windows Server 2008, Wi
 and Windows Server 2012 R2 on July 16, 2016,[87] and was released on January 19, 2017.[88] 
 ";
 
-        public ValidStringResource() : base(str)
-        {
-        }
+    public ValidStringResource() : base(Str)
+    {
     }
 }

@@ -1,10 +1,9 @@
 using System.Collections.Generic;
 using AngleParse.Resource;
 
-namespace AngleParse.Selector
+namespace AngleParse.Selector;
+
+public interface ISelector
 {
-    public interface ISelector
-    {
-        IEnumerable<IResource> Select(IResource resource);
-    }
+    IEnumerable<IResource> Select(IResource resource);
 }

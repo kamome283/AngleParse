@@ -2,38 +2,37 @@ using System.Linq;
 using AngleSharp;
 using AngleSharp.Dom;
 
-namespace AngleParse.Resource
+namespace AngleParse.Resource;
+
+public class ElementResource : IResource
 {
-    public class ElementResource : IResource
+    private readonly IElement _element;
+
+    public ElementResource(IElement element)
     {
-        private readonly IElement element;
+        _element = element;
+    }
 
-        public ElementResource(IElement element)
-        {
-            this.element = element;
-        }
+    public ElementResource(string body)
+    {
+        var config = Configuration.Default;
+        var context = BrowsingContext.New(config);
+        var doc = context.OpenAsync(req => req.Content(body)).Result;
+        _element = doc.Body.ChildElementCount == 1 ? doc.Body.Children.First() : doc.Body;
+    }
 
-        public ElementResource(string body)
-        {
-            var config = Configuration.Default;
-            var context = BrowsingContext.New(config);
-            var doc = context.OpenAsync(req => req.Content(body)).Result;
-            element = doc.Body.ChildElementCount == 1 ? doc.Body.Children.First() : doc.Body;
-        }
+    public IElement AsElement()
+    {
+        return _element;
+    }
 
-        public IElement AsElement()
-        {
-            return element;
-        }
+    public string AsString()
+    {
+        return _element.TextContent;
+    }
 
-        public string AsString()
-        {
-            return element.TextContent;
-        }
-
-        public object AsObject()
-        {
-            return element.TextContent;
-        }
+    public object AsObject()
+    {
+        return _element.TextContent;
     }
 }
