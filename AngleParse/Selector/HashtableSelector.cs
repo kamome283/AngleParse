@@ -41,14 +41,11 @@ public class HashtableSelector : ISelector
 
     private static object Unify(object[] objs)
     {
-        switch (objs.Length)
+        return objs.Length switch
         {
-            case 0:
-                return null;
-            case 1:
-                return objs.First();
-            default:
-                return objs;
-        }
+            0 => null,
+            1 => objs.First(),
+            _ => objs
+        };
     }
 }
