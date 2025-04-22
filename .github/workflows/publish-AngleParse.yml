@@ -1,0 +1,54 @@
+name: Publish AngleParse
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - '*'
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment: release
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v3
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 9.x
+      - name: dotnet test
+        run: |
+          dotnet test ./AngleParse.Test/AngleParse.Test.csproj -c Release
+      - name: dotnet publish
+        run: |
+          dotnet publish ./AngleParse/AngleParse.csproj -c Release
+      - name: Modify module metadata
+        shell: pwsh
+        env:
+          CommitTag: ${{ github.ref_name }}
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $moduleManifestPath = '/Users/tsubasa/Projects/AngleParse/AngleParse/bin/Release/AngleParse/AngleParse.psd1'
+          $moduleVersion = $Env:CommitTag
+          $releaseNotes = gh release view $Env:CommitTag --json body | ConvertFrom-Json | ForEach-Object body
+
+          filter modify($key, $value)
+          {
+              $_ -replace "^\s*$key\s*=.*$", "$key = '$value'"
+          }
+
+          Get-Content $moduleManifestPath |
+                  modify ModuleVersion $moduleVersion |
+                  modify ReleaseNotes $releaseNotes |
+                  Set-Content $moduleManifestPath
+      - name: Publish to PowerShell Gallery
+        shell: pwsh
+        env:
+          PSGalleryApiKey: ${{ secrets.PSGalleryApiKey }}
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $modulePath = './AngleParse/bin/Release/AngleParse'
+          if (-not (Test-Path $modulePath)) {
+            throw "Module path $modulePath does not exist."
+          }
+          Publish-Module -Path (Join-Path $modulePath 'AngleParse.psd1') -NuGetApiKey $env:PSGalleryApiKey
