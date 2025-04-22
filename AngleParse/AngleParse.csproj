@@ -12,16 +12,16 @@
     </ItemGroup>
 
     <!-- Target with BeforeTargets="Publish" seems to run after the publish in my environment.-->
-    <Target Name="CleanPublishDir" AfterTargets="Build" Condition="'$(_IsPublishing)' == 'true'">
-        <RemoveDir Directories="$(OutDir)"/>
+    <Target Name="CleanModuleDirectory" AfterTargets="Build" Condition="'$(_IsPublishing)' == 'true'">
+        <RemoveDir Directories="$(OutDir)../AngleParse"/>
     </Target>
 
-    <Target Name="RenamePublishDir" AfterTargets="Publish">
+    <Target Name="MoveFilesToModuleDirectory" AfterTargets="Publish">
         <ItemGroup>
             <FilesToMove Include="$(OutDir)publish\*"/>
         </ItemGroup>
-        <MakeDir Directories="$(OutDir)AngleParse"/>
-        <Move SourceFiles="@(FilesToMove)" DestinationFolder="$(OutDir)AngleParse"/>
+        <MakeDir Directories="$(OutDir)../AngleParse"/>
+        <Move SourceFiles="@(FilesToMove)" DestinationFolder="$(OutDir)../AngleParse"/>
         <RemoveDir Directories="$(OutDir)publish"/>
     </Target>
 </Project>
