@@ -14,7 +14,7 @@ internal static class SelectorFactory
     public static ISelector<ElementResource, ObjectResource> CreatePipeline(object? obj) =>
         CreateSelector(obj);
 
-    private static dynamic CreateSelector(object? obj) => obj switch
+    internal static dynamic CreateSelector(object? obj) => obj switch
     {
         string cssSelectorExpr => new CssSelector(cssSelectorExpr),
         Regex regex => new RegexSelector(regex),
