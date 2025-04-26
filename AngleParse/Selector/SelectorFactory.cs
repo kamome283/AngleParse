@@ -22,7 +22,7 @@ internal static class SelectorFactory
         ScriptBlock scriptBlock => new ScriptBlockSelector(scriptBlock),
         Hashtable hashtable => CreateTableSelector(hashtable),
         object[] objects => CreateFuncSelector(objects),
-        null => throw new ArgumentNullException(nameof(obj)),
+        null => throw new ArgumentOutOfRangeException(nameof(obj), "null cannot be a selector"),
         _ => throw new ArgumentOutOfRangeException(nameof(obj), obj,
             $"Invalid selector type: {obj.GetType()}")
     };
