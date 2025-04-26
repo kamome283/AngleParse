@@ -44,11 +44,11 @@ internal static class SelectorFactory
         {
             // Since In of ISelector is contravariant,
             // ObjectResource is the most specific type that can appear in this position.
-            List<ISelector<ObjectResource, ObjectResource>> objectSelectors =>
+            IReadOnlyList<ISelector<ObjectResource, ObjectResource>> objectSelectors =>
                 new TableSelector<ObjectResource>(CreateDictionary(keys, objectSelectors)),
-            List<ISelector<StringResource, ObjectResource>> stringSelectors =>
+            IReadOnlyList<ISelector<StringResource, ObjectResource>> stringSelectors =>
                 new TableSelector<StringResource>(CreateDictionary(keys, stringSelectors)),
-            List<ISelector<ElementResource, ObjectResource>> elementSelectors =>
+            IReadOnlyList<ISelector<ElementResource, ObjectResource>> elementSelectors =>
                 new TableSelector<ElementResource>(CreateDictionary(keys, elementSelectors)),
             _ => throw new ArgumentOutOfRangeException(
                 nameof(hashtable),
@@ -57,12 +57,12 @@ internal static class SelectorFactory
     }
 
     private static Dictionary<object, ISelector<In, ObjectResource>> CreateDictionary<In>(
-        List<object> keys, List<ISelector<In, ObjectResource>> selectors) where In : ObjectResource
+        IReadOnlyList<object> keys, IReadOnlyList<ISelector<In, ObjectResource>> selectors)
+        where In : ObjectResource
     {
         if (keys.Count != selectors.Count)
             throw new InvalidOperationException("Keys and selectors count mismatch.");
-        return new Dictionary<object, ISelector<In, ObjectResource>>(
-            keys.Zip(selectors, KeyValuePair.Create));
+        return keys.Zip(selectors).ToDictionary();
     }
 
     private static dynamic CreateFuncSelector(object[] objects)
