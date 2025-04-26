@@ -27,19 +27,22 @@ public class SelectHtmlElement : PSCmdlet
     public string Content { get; set; } = null!;
 
     private ISelector<ElementResource, ObjectResource> Pipeline { get; set; } = null!;
-    private IElement Element { get; set; } = null!;
+    private ElementResource ElementResource { get; set; } = null!;
 
     protected override void BeginProcessing()
     {
-        Pipeline = SelectorFactory.CreateSelector(Selector);
-        Element = GetElementAsync(Content).GetAwaiter().GetResult();
+        Pipeline = SelectorFactory.CreatePipeline(Selector);
+        var element = GetElementAsync(Content).GetAwaiter().GetResult();
+        ElementResource = new ElementResource(element);
     }
 
     protected override void ProcessRecord()
     {
-        var resource = new ElementResource(Element);
         WriteObject(
-            Pipeline.Select(resource).Select(r => new PSObject(r.Object)).ToArray(),
+            Pipeline
+                .Select(ElementResource)
+                .Select(r => new PSObject(r.Object))
+                .ToArray(),
             true
         );
     }
