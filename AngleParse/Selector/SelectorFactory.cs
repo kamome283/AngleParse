@@ -67,15 +67,6 @@ internal static class SelectorFactory
             $"Cannot create table selector from {selectors.GetType()}");
     }
 
-    private static Dictionary<object, ISelector<In, ObjectResource>> CreateDictionary<In>(
-        IReadOnlyList<object> keys, IReadOnlyList<ISelector<In, ObjectResource>> selectors)
-        where In : ObjectResource
-    {
-        if (keys.Count != selectors.Count)
-            throw new InvalidOperationException("Keys and selectors count mismatch.");
-        return keys.Zip(selectors).ToDictionary();
-    }
-
     private static dynamic CreateFuncSelector(object[] objects)
     {
         dynamic selector = FuncSelector<ElementResource, ElementResource>.Identity;
