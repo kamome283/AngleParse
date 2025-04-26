@@ -38,22 +38,33 @@ internal static class SelectorFactory
             selectors.Add(CreateSelector(entry.Value));
         }
 
-        dynamic dynamicSelectors = selectors;
-
-        return dynamicSelectors switch
+        List<T>? CastList<T>(List<dynamic> list)
         {
-            // Since In of ISelector is contravariant,
-            // ObjectResource is the most specific type that can appear in this position.
-            IReadOnlyList<ISelector<ObjectResource, ObjectResource>> objectSelectors =>
-                new TableSelector<ObjectResource>(CreateDictionary(keys, objectSelectors)),
-            IReadOnlyList<ISelector<StringResource, ObjectResource>> stringSelectors =>
-                new TableSelector<StringResource>(CreateDictionary(keys, stringSelectors)),
-            IReadOnlyList<ISelector<ElementResource, ObjectResource>> elementSelectors =>
-                new TableSelector<ElementResource>(CreateDictionary(keys, elementSelectors)),
-            _ => throw new ArgumentOutOfRangeException(
-                nameof(hashtable),
-                $"Cannot create table selector from {hashtable}")
-        };
+            var casted = list.OfType<T>().ToList();
+            return casted.Count == list.Count ? casted : null;
+        }
+
+        Dictionary<T, R> GetDictionary<T, R>(List<T> ks, List<R> vs) where T : notnull
+        {
+            if (ks.Count != vs.Count)
+                throw new InvalidOperationException("Keys and selectors count mismatch.");
+            return ks.Zip(vs).ToDictionary();
+        }
+
+        // Since In of ISelector is contravariant,
+        // ObjectResource is the most specific type that can appear in this position.
+        var objectSelectors = CastList<ISelector<ObjectResource, ObjectResource>>(selectors);
+        if (objectSelectors is not null)
+            return new TableSelector<ObjectResource>(GetDictionary(keys, objectSelectors));
+        var stringSelectors = CastList<ISelector<StringResource, ObjectResource>>(selectors);
+        if (stringSelectors is not null)
+            return new TableSelector<StringResource>(GetDictionary(keys, stringSelectors));
+        var elementSelectors = CastList<ISelector<ElementResource, ObjectResource>>(selectors);
+        if (elementSelectors is not null)
+            return new TableSelector<ElementResource>(GetDictionary(keys, elementSelectors));
+        throw new ArgumentOutOfRangeException(
+            nameof(selectors),
+            $"Cannot create table selector from {selectors.GetType()}");
     }
 
     private static Dictionary<object, ISelector<In, ObjectResource>> CreateDictionary<In>(
