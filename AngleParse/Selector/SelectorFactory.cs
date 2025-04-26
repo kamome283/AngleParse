@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
 using System.Text.RegularExpressions;
@@ -19,12 +20,50 @@ internal static class SelectorFactory
         Regex regex => new RegexSelector(regex),
         Attr attribute => new AttributeSelector(attribute),
         ScriptBlock scriptBlock => new ScriptBlockSelector(scriptBlock),
-        Hashtable hashtable => throw new NotImplementedException(),
+        Hashtable hashtable => CreateTableSelector(hashtable),
         object[] objects => CreateFuncSelector(objects),
         null => throw new ArgumentNullException(nameof(obj)),
         _ => throw new ArgumentOutOfRangeException(nameof(obj), obj,
             $"Invalid selector type: {obj.GetType()}")
     };
+
+    private static dynamic CreateTableSelector(Hashtable hashtable)
+    {
+        // Since Dictionary does not support variance, we need to make it from lists.
+        List<object> keys = [];
+        List<dynamic> selectors = [];
+        foreach (var entry in hashtable.Cast<DictionaryEntry>())
+        {
+            keys.Add(entry.Key);
+            selectors.Add(CreateSelector(entry.Value));
+        }
+
+        dynamic dynamicSelectors = selectors;
+
+        return dynamicSelectors switch
+        {
+            // Since In of ISelector is contravariant,
+            // ObjectResource is the most specific type that can appear in this position.
+            List<ISelector<ObjectResource, ObjectResource>> objectSelectors =>
+                new TableSelector<ObjectResource>(CreateDictionary(keys, objectSelectors)),
+            List<ISelector<StringResource, ObjectResource>> stringSelectors =>
+                new TableSelector<StringResource>(CreateDictionary(keys, stringSelectors)),
+            List<ISelector<ElementResource, ObjectResource>> elementSelectors =>
+                new TableSelector<ElementResource>(CreateDictionary(keys, elementSelectors)),
+            _ => throw new ArgumentOutOfRangeException(
+                nameof(hashtable),
+                $"Cannot create table selector from {hashtable}")
+        };
+    }
+
+    private static Dictionary<object, ISelector<In, ObjectResource>> CreateDictionary<In>(
+        List<object> keys, List<ISelector<In, ObjectResource>> selectors) where In : ObjectResource
+    {
+        if (keys.Count != selectors.Count)
+            throw new InvalidOperationException("Keys and selectors count mismatch.");
+        return new Dictionary<object, ISelector<In, ObjectResource>>(
+            keys.Zip(selectors, KeyValuePair.Create));
+    }
 
     private static dynamic CreateFuncSelector(object[] objects)
     {
