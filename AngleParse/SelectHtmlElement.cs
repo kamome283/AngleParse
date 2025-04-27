@@ -1,11 +1,7 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Management.Automation;
-using System.Threading.Tasks;
 using AngleParse.Resource;
 using AngleParse.Selector;
-using AngleSharp;
-using AngleSharp.Dom;
 
 namespace AngleParse;
 
@@ -32,8 +28,7 @@ public class SelectHtmlElement : PSCmdlet
     protected override void BeginProcessing()
     {
         Pipeline = SelectorFactory.CreatePipeline(Selector);
-        var element = GetElementAsync(Content).GetAwaiter().GetResult();
-        ElementResource = new ElementResource(element);
+        ElementResource = ElementResource.CreateAsync(Content).GetAwaiter().GetResult();
     }
 
     protected override void ProcessRecord()
@@ -45,14 +40,5 @@ public class SelectHtmlElement : PSCmdlet
                 .ToArray(),
             true
         );
-    }
-
-    private static async Task<IElement> GetElementAsync(string Content)
-    {
-        var config = Configuration.Default;
-        var context = BrowsingContext.New(config);
-        var doc = await context.OpenAsync(res => res.Content(Content));
-        if (doc.Body is null) throw new ArgumentOutOfRangeException(nameof(Content));
-        return doc.Body.ChildElementCount == 1 ? doc.Body.Children.First() : doc.Body;
     }
 }
