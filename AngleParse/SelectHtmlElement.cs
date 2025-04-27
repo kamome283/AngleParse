@@ -6,7 +6,7 @@ using AngleParse.Selector;
 namespace AngleParse;
 
 [Cmdlet(VerbsCommon.Select, "HtmlContent", HelpUri = "https://github.com/kamome283/AngleParse")]
-[OutputType(typeof(PSObject[]))]
+[OutputType(typeof(PSObject))]
 public class SelectHtmlElement : PSCmdlet
 {
     [Parameter(
