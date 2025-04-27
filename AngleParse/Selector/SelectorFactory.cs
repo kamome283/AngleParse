@@ -69,8 +69,12 @@ internal static class SelectorFactory
 
     private static dynamic CreateFuncSelector(object[] objects)
     {
-        dynamic selector = FuncSelector<ElementResource, ElementResource>.Identity;
-        foreach (var obj in objects)
+        if (objects.Length == 0)
+            throw new ArgumentOutOfRangeException(nameof(objects),
+                "Cannot create selector from empty array");
+        var (head, tail) = (objects[0], objects[1..]);
+        var selector = CreateSelector(head);
+        foreach (var obj in tail)
         {
             var nextSelector = CreateSelector(obj);
             try
