@@ -13,4 +13,7 @@ public class ScriptBlockSelectorTests
         var scriptBlockSelector = SelectorFactory.CreateSelector(scriptBlock);
         Assert.IsType<ScriptBlockSelector>(scriptBlockSelector);
     }
+
+    // ScriptBlock invocation from C# proved unreliable (e.g., runspace context issues).
+    // TODO: Tests about selection will be implemented using Pester instead.
 }
