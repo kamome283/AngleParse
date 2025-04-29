@@ -12,7 +12,15 @@ public class AttributeSelectorTests
     [Fact]
     public void Create()
     {
-        const Attr attribute = Attr.Href;
+        var attribute = Attr.Href;
+        var attributeSelector = SelectorFactory.CreateSelector(attribute);
+        Assert.IsType<AttributeSelector>(attributeSelector);
+    }
+
+    [Fact]
+    public void CreateWithOriginalAttribute()
+    {
+        var attribute = new Attr("some-attribute");
         var attributeSelector = SelectorFactory.CreateSelector(attribute);
         Assert.IsType<AttributeSelector>(attributeSelector);
     }
@@ -121,6 +129,18 @@ public class AttributeSelectorTests
         Assert.Single(
             selector.Select(fullAttribute).Select(r => r.String),
             item => item == "some_name");
+        Assert.Empty(selector.Select(noAttribute));
+    }
+
+    [Fact]
+    public async Task SelectByUndefinedAttribute()
+    {
+        var attribute = new Attr("some-attribute");
+        AttributeSelector selector = SelectorFactory.CreateSelector(attribute);
+        var (fullAttribute, noAttribute) = await CreateElementResourcesAsync();
+        Assert.Single(
+            selector.Select(fullAttribute).Select(r => r.String),
+            item => item == "some_value");
         Assert.Empty(selector.Select(noAttribute));
     }
 
