@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -6,25 +5,15 @@ using AngleParse.Resource;
 
 namespace AngleParse.Selector;
 
-public class RegexSelector : ISelector
+internal class RegexSelector(Regex regex) : ISelector<StringResource, StringResource>
 {
-    private readonly Regex _regex;
+    public IEnumerable<StringResource> Select(StringResource resource) =>
+        regex.Matches(resource.String).SelectMany(GetGroupedValue);
 
-    public RegexSelector(Regex regex)
-    {
-        try
-        {
-            _regex = regex;
-        }
-        catch (TypeInitializationException e)
-        {
-            throw new TypeInitializationException(typeof(RegexSelector).FullName, e);
-        }
-    }
-
-    public IEnumerable<IResource> Select(IResource resource)
-    {
-        var body = resource.AsString();
-        return _regex.Matches(body).SelectMany(StringResource.FromMatch);
-    }
+    private static IEnumerable<StringResource> GetGroupedValue(Match match) =>
+        match
+            .Groups
+            .Cast<Group>()
+            .Skip(1) // Skip the first group which is the whole match
+            .Select(group => new StringResource(group.Value));
 }
