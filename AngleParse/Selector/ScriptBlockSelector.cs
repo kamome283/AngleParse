@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
@@ -6,18 +5,14 @@ using AngleParse.Resource;
 
 namespace AngleParse.Selector;
 
-public class ScriptBlockSelector(ScriptBlock sb) : ISelector
+internal class ScriptBlockSelector(ScriptBlock scriptBlock)
+    : ISelector<ObjectResource, ObjectResource>
 {
-    private readonly ScriptBlock _sb = sb ?? throw new TypeInitializationException(
-        nameof(ScriptBlockSelector),
-        new NullReferenceException()
-    );
-
-    public IEnumerable<IResource> Select(IResource resource)
+    public IEnumerable<ObjectResource> Select(ObjectResource resource)
     {
-        return _sb.InvokeWithContext(
-            new Dictionary<string, ScriptBlock>(),
-            [new PSVariable("_", resource.AsObject())]
-        ).Select(pso => new ObjectResource(pso));
+        return scriptBlock
+            // Set '$_' variable into the script block
+            .InvokeWithContext([], [new PSVariable("_", resource.Object)])
+            .Select(pso => new ObjectResource(pso));
     }
 }

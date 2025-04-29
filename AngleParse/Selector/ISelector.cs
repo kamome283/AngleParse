@@ -3,7 +3,7 @@ using AngleParse.Resource;
 
 namespace AngleParse.Selector;
 
-public interface ISelector
+public interface ISelector<in In, out Out> where In : Out where Out : ObjectResource
 {
-    IEnumerable<IResource> Select(IResource resource);
+    public IEnumerable<Out> Select(In resource);
 }

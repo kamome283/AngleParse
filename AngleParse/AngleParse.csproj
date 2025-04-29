@@ -3,7 +3,12 @@
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
         <LangVersion>default</LangVersion>
+        <Nullable>enable</Nullable>
     </PropertyGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="AngleParse.Test"/>
+    </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="AngleSharp" Version="1.3.0"/>
