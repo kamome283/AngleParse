@@ -144,6 +144,18 @@ public class AttributeSelectorTests
         Assert.Empty(selector.Select(noAttribute));
     }
 
+    [Fact]
+    public async Task SelectingValuelessAttributeReturnsEmptyString()
+    {
+        var attribute = new Attr("valueless-attribute");
+        AttributeSelector selector = SelectorFactory.CreateSelector(attribute);
+        var (fullAttribute, noAttribute) = await CreateElementResourcesAsync();
+        Assert.Single(
+            selector.Select(fullAttribute).Select(r => r.String),
+            item => item == string.Empty);
+        Assert.Empty(selector.Select(noAttribute));
+    }
+
     private static async Task<(ElementResource fullAttribute, ElementResource noAttribute)>
         CreateElementResourcesAsync()
     {
