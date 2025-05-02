@@ -18,8 +18,6 @@ internal sealed class PropertySelector(Prop prop) : ISelector<ElementResource, O
                 .Element
                 .Attributes
                 .ToDictionary(a => a.Name, a => a.Value);
-            // TODO: Search if Dictionary type is easy to use in PowerShell
-            // and if not, implement some measures to make it easier to use.
             return [new ObjectResource(attributesTable)];
         }
 
