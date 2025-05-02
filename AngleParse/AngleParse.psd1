@@ -7,15 +7,14 @@
 #
 
 @{
-
 # Script module or binary module file associated with this manifest.
     RootModule = './AngleParse.dll'
 
     # Version number of this module.
-    ModuleVersion = ''
+    ModuleVersion = '0.0.0.0'
 
     # Supported PSEditions
-    # CompatiblePSEditions = @()
+    CompatiblePSEditions = @('Core')
 
     # ID used to uniquely identify this module
     GUID = '9a56d36c-7cff-405a-9f2f-9410ac6ce0b5'
@@ -33,7 +32,7 @@
     Description = 'HTML parsing and processing module'
 
     # Minimum version of the PowerShell engine required by this module
-    # PowerShellVersion = ''
+    PowerShellVersion = '7.4'
 
     # Name of the PowerShell host required by this module
     # PowerShellHostName = ''
@@ -98,7 +97,7 @@
             Tags = 'HTML', 'parse', 'AngleSharp'
 
             # A URL to the license for this module.
-            # LicenseUri = ''
+            LicenseUri = 'https://github.com/kamome283/AngleParse/blob/master/LICENSE'
 
             # A URL to the main website for this project.
             ProjectUri = 'https://github.com/kamome283/AngleParse'
