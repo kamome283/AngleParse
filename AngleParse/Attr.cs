@@ -1,6 +1,6 @@
 namespace AngleParse;
 
-public record Attr(string Value)
+public sealed record Attr(string Value)
 {
     public static Attr InnerHtml => new("'<>InnerHtml");
     public static Attr OuterHtml => new("'<>OuterHtml");

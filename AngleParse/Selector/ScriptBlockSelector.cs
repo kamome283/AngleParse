@@ -5,7 +5,7 @@ using AngleParse.Resource;
 
 namespace AngleParse.Selector;
 
-internal class ScriptBlockSelector(ScriptBlock scriptBlock)
+internal sealed class ScriptBlockSelector(ScriptBlock scriptBlock)
     : ISelector<ObjectResource, ObjectResource>
 {
     public IEnumerable<ObjectResource> Select(ObjectResource resource)

@@ -10,7 +10,7 @@ using static AngleParse.Test.Helpers.ElementResourceFactory;
 
 namespace AngleParse.Test.Selector.FuncSelectorTests;
 
-public class CreationTests
+public sealed class CreationTests
 {
     [Fact]
     public void CreatingWithEmptyArrayThrowsException()
