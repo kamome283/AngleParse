@@ -15,5 +15,5 @@ public sealed class ScriptBlockSelectorTests
     }
 
     // ScriptBlock invocation from C# proved unreliable (e.g., runspace context issues).
-    // TODO: Tests about selection will be implemented using Pester instead.
+    // Tests about selection are implemented using Pester instead.
 }
