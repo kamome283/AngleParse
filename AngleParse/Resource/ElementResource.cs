@@ -6,10 +6,8 @@ using AngleSharp.Dom;
 
 namespace AngleParse.Resource;
 
-internal sealed class ElementResource(IElement element) : StringResource(element.TextContent)
+internal sealed record ElementResource(IElement Element) : StringResource(Element.TextContent)
 {
-    public IElement Element => element;
-
     public static async Task<ElementResource> CreateAsync(string content)
     {
         var config = Configuration.Default;
