@@ -108,6 +108,33 @@ Describe 'Select-HtmlContent' {
             $result | should -BeNullOrEmpty
         }
     }
+    Context 'PropertySelector' {
+        It 'retunrs inner IElement when the selector is Prop.Element' {
+            $result = Get-Asset 'full.html' | Select-HtmlContent ([AngleParse.Prop]::Element)
+            $result | should -beOfType AngleSharp.Dom.IElement
+        }
+        It 'returns attribute table when the selector is Prop.AttributesTable' {
+            $result = Get-Asset 'full-attribute.html' | Select-HtmlContent ([AngleParse.Prop]::AttributesTable)
+            $result.class | should -be 'some_class another_class'
+            $result.href | should -be 'https://some_url_in_japan.go.jp'
+            $result.id | should -be 'some_id'
+            $result.name | should -be 'some_name'
+            $result.'some-attribute' | should -be 'some_value'
+            $result.src | should -be 'https://some_url_in_japan.go.jp/some_pic.jpg'
+            $result.title | should -be 'Some title'
+            $result.'valueless-attribute' | should -be ''
+            $result.nonexistent_attribute | should -BeNullOrEmpty
+        }
+        It 'retunrs inner IElement property value with undefined property selector' {
+            $result = Get-Asset 'full-attribute.html' | Select-HtmlContent ([AngleParse.Prop]'ClassName')
+            $result | should -be 'some_class another_class'
+        }
+        It 'throws if the property does not exist' {
+            {
+                Get-Asset 'full-attribute.html' | Select-HtmlContent ([AngleParse.Prop]'NonexistentProperty')
+            } | should -throw
+        }
+    }
     Context 'ScriptBlockSelector' {
         It 'binds $_ in the scriptblock to the current element' {
             Get-Asset 'full-attribute.html' | Select-HtmlContent {
