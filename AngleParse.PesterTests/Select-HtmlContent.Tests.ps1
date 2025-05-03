@@ -101,11 +101,11 @@ Describe 'Select-HtmlContent' {
         }
         It 'returns null if the selector does not match anything' {
             $result = Get-Asset 'full.html' | Select-HtmlContent 'section#fragment > div.nonexistent_class'
-            $result | should -BeNullOrEmpty
+            $result | should -be $null
         }
         It 'returns null if the document is empty' {
             $result = Get-Asset 'empty.html' | Select-HtmlContent 'div'
-            $result | should -BeNullOrEmpty
+            $result | should -be $null
         }
     }
     Context 'PropertySelector' {
@@ -123,7 +123,7 @@ Describe 'Select-HtmlContent' {
             $result.src | should -be 'https://some_url_in_japan.go.jp/some_pic.jpg'
             $result.title | should -be 'Some title'
             $result.'valueless-attribute' | should -be ''
-            $result.nonexistent_attribute | should -BeNullOrEmpty
+            $result.nonexistent_attribute | should -be $null
         }
         It 'retunrs inner IElement property value with undefined property selector' {
             $result = Get-Asset 'full-attribute.html' | Select-HtmlContent ([AngleParse.Prop]'ClassName')
@@ -161,7 +161,7 @@ Describe 'Select-HtmlContent' {
         }
         It 'outputs null when the scriptblock returns nothing' {
             $result = Get-Asset 'full-attribute.html' | Select-HtmlContent { }
-            $result | should -BeNullOrEmpty
+            $result | should -be $null
         }
         It 'outputs the result even if the Write-Error is called in the scriptblock' {
             $result = Get-Asset 'full-attribute.html' | Select-HtmlContent {
