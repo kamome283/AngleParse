@@ -4,7 +4,7 @@ using AngleParse.Resource;
 
 namespace AngleParse.Selector;
 
-internal class AttributeSelector(Attr attribute) : ISelector<ElementResource, StringResource>
+internal sealed class AttributeSelector(Attr attribute) : ISelector<ElementResource, StringResource>
 {
     public IEnumerable<StringResource> Select(ElementResource resource) =>
         attribute switch
