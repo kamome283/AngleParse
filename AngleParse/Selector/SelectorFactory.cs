@@ -64,7 +64,7 @@ internal static class SelectorFactory
         if (elementSelectors is not null)
             return new TableSelector<ElementResource>(GetDictionary(keys, elementSelectors));
         throw new ArgumentOutOfRangeException(
-            nameof(selectors),
+            nameof(hashtable),
             $"Cannot create table selector from {selectors.GetType()}");
     }
 
