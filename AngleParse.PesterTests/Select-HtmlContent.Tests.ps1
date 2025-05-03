@@ -34,6 +34,61 @@ BeforeAll {
 }
 
 Describe 'Select-HtmlContent' {
+    Context 'AttributeSelector' {
+        Context 'Truly attribute' {
+            It 'selects the attribute value' {
+                $attr = [AngleParse.Attr]'some-attribute'
+                $result = Get-Asset 'full-attribute.html' | Select-HtmlContent $attr
+                $result | should -be 'some_value'
+            }
+            It 'outputs empty string if the attribute does not have value' {
+                $attr = [AngleParse.Attr]'valueless-attribute'
+                $result = Get-Asset 'full-attribute.html' | Select-HtmlContent $attr
+                $result | should -be ''
+            }
+            It 'outputs null if the attribute does not exist' {
+                $attr = [AngleParse.Attr]'nonexistent-attribute'
+                $result = Get-Asset 'full-attribute.html' | Select-HtmlContent $attr
+                $result | should -BeNullOrEmpty
+            }
+            It 'class-defined attributes works as well' -ForEach @(
+                @{ Attr = [AngleParse.Attr]::Href; Expected = 'https://some_url_in_japan.go.jp' }
+                @{ Attr = [AngleParse.Attr]::Src; Expected = 'https://some_url_in_japan.go.jp/some_pic.jpg' }
+                @{ Attr = [AngleParse.Attr]::Title; Expected = 'Some title' }
+                @{ Attr = [AngleParse.Attr]::Name; Expected = 'some_name' }
+            ) {
+                $result = Get-Asset 'full-attribute.html' | Select-HtmlContent $attr
+                $result | should -be $Expected
+            }
+        }
+        Context 'Not truly attribute' {
+            It 'InnerHtml works' {
+                # If not enclosed in parentheses, it will be evaluated as a string instead of an Attr.
+                $result = Get-Asset 'full-attribute.html' | Select-HtmlContent ([AngleParse.Attr]::InnerHtml)
+                $result | should -be '<span>some link</span>'
+            }
+            It 'OuterHtml works' {
+                $result = Get-Asset 'no-attribute.html' | Select-HtmlContent ([AngleParse.Attr]::OuterHtml)
+                $result | should -be '<a><span>some link</span></a>'
+            }
+            It 'TextContent works' {
+                $result = Get-Asset 'full-attribute.html' | Select-HtmlContent ([AngleParse.Attr]::TextContent)
+                $result | should -be 'some link'
+            }
+            It 'Id works' {
+                $result = Get-Asset 'full-attribute.html' | Select-HtmlContent ([AngleParse.Attr]::Id)
+                $result | should -be 'some_id'
+            }
+            It 'ClassName works' {
+                $result = Get-Asset 'full-attribute.html' | Select-HtmlContent ([AngleParse.Attr]::ClassName)
+                $result | should -be 'some_class another_class'
+            }
+            It 'SplitClasses works' {
+                $result = Get-Asset 'full-attribute.html' | Select-HtmlContent ([AngleParse.Attr]::SplitClasses)
+                $result | should -be 'some_class', 'another_class'
+            }
+        }
+    }
     Context 'ScriptBlockSelector' {
         It 'binds $_ in the scriptblock to the current element' {
             Get-Asset 'full-attribute.html' | Select-HtmlContent {
