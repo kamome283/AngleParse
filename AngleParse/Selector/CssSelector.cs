@@ -6,7 +6,7 @@ using AngleSharp.Css.Parser;
 
 namespace AngleParse.Selector;
 
-internal class CssSelector : ISelector<ElementResource, ElementResource>
+internal sealed class CssSelector : ISelector<ElementResource, ElementResource>
 {
     public CssSelector(string cssSelectorExpr)
     {
