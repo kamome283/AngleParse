@@ -89,6 +89,25 @@ Describe 'Select-HtmlContent' {
             }
         }
     }
+    Context 'CssSelector' {
+        It 'throws if the selector is not valid' {
+            {
+                Get-Asset 'full.html' | Select-HtmlContent 'div > p >'
+            } | should -throw
+        }
+        It 'selects the element by CSS selector' {
+            $result = Get-Asset 'full.html' | Select-HtmlContent 'section#fragment > div.some_class'
+            $result.Length | should -be 2
+        }
+        It 'returns null if the selector does not match anything' {
+            $result = Get-Asset 'full.html' | Select-HtmlContent 'section#fragment > div.nonexistent_class'
+            $result | should -BeNullOrEmpty
+        }
+        It 'returns null if the document is empty' {
+            $result = Get-Asset 'empty.html' | Select-HtmlContent 'div'
+            $result | should -BeNullOrEmpty
+        }
+    }
     Context 'ScriptBlockSelector' {
         It 'binds $_ in the scriptblock to the current element' {
             Get-Asset 'full-attribute.html' | Select-HtmlContent {
