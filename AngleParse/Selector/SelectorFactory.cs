@@ -18,7 +18,7 @@ internal static class SelectorFactory
     {
         string cssSelectorExpr => new CssSelector(cssSelectorExpr),
         Regex regex => new RegexSelector(regex),
-        Attr attribute => new AttributeSelector(attribute),
+        Attr attr => new AttributeSelector(attr),
         Prop prop => new PropertySelector(prop),
         ScriptBlock scriptBlock => new ScriptBlockSelector(scriptBlock),
         Hashtable hashtable => CreateTableSelector(hashtable),
