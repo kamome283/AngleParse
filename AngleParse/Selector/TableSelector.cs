@@ -6,7 +6,7 @@ using AngleParse.Resource;
 
 namespace AngleParse.Selector;
 
-internal class TableSelector<In>(IDictionary<object, ISelector<In, ObjectResource>> table)
+internal sealed class TableSelector<In>(IDictionary<object, ISelector<In, ObjectResource>> table)
     : ISelector<In, ObjectResource> where In : ObjectResource
 {
     public IEnumerable<ObjectResource> Select(In resource)

@@ -4,7 +4,7 @@ using Xunit;
 
 namespace AngleParse.Test.Selector;
 
-public class ScriptBlockSelectorTests
+public sealed class ScriptBlockSelectorTests
 {
     [Fact]
     public void Create()

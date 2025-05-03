@@ -6,7 +6,7 @@ using static AngleParse.Test.Helpers.ElementResourceFactory;
 
 namespace AngleParse.Test.Resource;
 
-public class ElementResourceTests
+public sealed class ElementResourceTests
 {
     [Fact]
     public async Task Create()

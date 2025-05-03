@@ -8,7 +8,7 @@ namespace AngleParse;
 
 [Cmdlet(VerbsCommon.Select, "HtmlContent", HelpUri = "https://github.com/kamome283/AngleParse")]
 [OutputType(typeof(PSObject))]
-public class SelectHtmlElement : PSCmdlet
+public sealed class SelectHtmlElement : PSCmdlet
 {
     [Parameter(
         Mandatory = true,

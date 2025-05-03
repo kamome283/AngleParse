@@ -7,7 +7,7 @@ using static AngleParse.Test.Helpers.ElementResourceFactory;
 
 namespace AngleParse.Test.Selector;
 
-public class AttributeSelectorTests
+public sealed class AttributeSelectorTests
 {
     [Fact]
     public void Create()

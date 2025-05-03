@@ -5,7 +5,7 @@ using AngleParse.Resource;
 
 namespace AngleParse.Selector;
 
-internal class RegexSelector(Regex regex) : ISelector<StringResource, StringResource>
+internal sealed class RegexSelector(Regex regex) : ISelector<StringResource, StringResource>
 {
     public IEnumerable<StringResource> Select(StringResource resource) =>
         regex.Matches(resource.String).SelectMany(GetGroupedValue);

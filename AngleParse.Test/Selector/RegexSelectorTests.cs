@@ -7,7 +7,7 @@ using static AngleParse.Test.Helpers.ElementResourceFactory;
 
 namespace AngleParse.Test.Selector;
 
-public class RegexSelectorTests
+public sealed class RegexSelectorTests
 {
     [Fact]
     public void Create()

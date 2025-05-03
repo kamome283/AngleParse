@@ -11,7 +11,7 @@ using static AngleParse.Test.Helpers.ElementResourceFactory;
 
 namespace AngleParse.Test.Selector;
 
-public class CreationTests
+public sealed class CreationTests
 {
     private static string ValidCssSelectorExpr => "div > p";
     private static string InvalidCssSelectorExpr => "div > p >";
