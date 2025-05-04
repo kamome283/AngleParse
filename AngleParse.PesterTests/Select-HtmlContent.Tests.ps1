@@ -335,4 +335,28 @@ Describe 'Select-HtmlContent' {
             } | should -throw
         }
     }
+    Context 'TableSelector' {
+        It 'returns a table whose keys are the input table keys and values are the evaluated values' {
+            $result = Get-Asset 'full-attribute.html' | Select-HtmlContent @{
+                ClassName = [AngleParse.Attr]::ClassName, { $_ -split ' ' }
+                Content = 'span', [AngleParse.Attr]::TextContent, ([regex]'(\w+)')
+            }
+            $expected = @{
+                ClassName = 'some_class', 'another_class'
+                Content = 'some', 'link'
+            }
+            foreach ($key in $result.Keys)
+            {
+                $result[$key] | should -be $expected[$key]
+            }
+        }
+        It 'throws when input type does not satisfy the most strict type requirement in the table' {
+            {
+                Get-Asset 'full-attribute.html' | Select-HtmlContent { $_ }, @{
+                    SplitContent = { $_ -split ' ' }
+                    SomeWhat = ([regex]'some (\w+)')
+                }
+            } | should -throw
+        }
+    }
 }
