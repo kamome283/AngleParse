@@ -188,6 +188,33 @@ Describe 'Select-HtmlContent' {
                     $result | should -be 1
                 }
             }
+            Context 'regex selector' {
+                It 'pipes between regex and attribute throws' {
+                    {
+                        Get-Asset 'full-attribute.html' | Select-HtmlContent ([regex]'(\w+)'), ([AngleParse.Attr]::Href)
+                    } | should -throw
+                }
+                It 'pipes between regex and css selector throws' {
+                    {
+                        Get-Asset 'full-attribute.html' | Select-HtmlContent ([regex]'(\w+)'), 'div.some_class'
+                    } | should -throw
+                }
+                It 'pipes between regex and property throws' {
+                    {
+                        Get-Asset 'full-attribute.html' | Select-HtmlContent ([regex]'(\w+)'), ([AngleParse.Prop]::Element)
+                    } | should -throw
+                }
+                It 'pipes between regex and regex works' {
+                    $result = Get-Asset 'full.html' | Select-HtmlContent ([regex]'(\w+ \d{4})'), ([regex]'(\d{4})')
+                    $result | should -be 2006, 2003, 2008, 2016, 2018
+                }
+                It 'pipes between regex and scriptblock works' {
+                    $result = Get-Asset 'full.html' | Select-HtmlContent ([regex]'(\w+ \d{4})'), {
+                        $_ -like 'November*' ? 1 : 2
+                    }
+                    $result | should -be 1, 2, 2, 2, 2
+                }
+            }
         }
     }
     Context 'PropertySelector' {
