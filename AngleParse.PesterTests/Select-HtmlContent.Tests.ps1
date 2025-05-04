@@ -52,12 +52,12 @@ Describe 'Select-HtmlContent' {
                 $result | should -BeNullOrEmpty
             }
             It 'class-defined attributes works as well' -ForEach @(
-                @{ Attr = [AngleParse.Attr]::Href; Expected = 'https://some_url_in_japan.go.jp' }
-                @{ Attr = [AngleParse.Attr]::Src; Expected = 'https://some_url_in_japan.go.jp/some_pic.jpg' }
-                @{ Attr = [AngleParse.Attr]::Title; Expected = 'Some title' }
-                @{ Attr = [AngleParse.Attr]::Name; Expected = 'some_name' }
+                @{ AttrSb = { [AngleParse.Attr]::Href }; Expected = 'https://some_url_in_japan.go.jp' }
+                @{ AttrSb = { [AngleParse.Attr]::Src }; Expected = 'https://some_url_in_japan.go.jp/some_pic.jpg' }
+                @{ AttrSb = { [AngleParse.Attr]::Title }; Expected = 'Some title' }
+                @{ AttrSb = { [AngleParse.Attr]::Name }; Expected = 'some_name' }
             ) {
-                $result = Get-Asset 'full-attribute.html' | Select-HtmlContent $attr
+                $result = Get-Asset 'full-attribute.html' | Select-HtmlContent (& $AttrSb)
                 $result | should -be $Expected
             }
         }
