@@ -215,6 +215,34 @@ Describe 'Select-HtmlContent' {
                     $result | should -be 1, 2, 2, 2, 2
                 }
             }
+            Context 'scriptblock selector' {
+                It 'pipes between scriptblock and attribute throws' {
+                    {
+                        Get-Asset 'full-attribute.html' | Select-HtmlContent { $_ -like 'some link' }, ([AngleParse.Attr]::Href)
+                    } | should -throw
+                }
+                It 'pipes between scriptblock and css selector throws' {
+                    {
+                        Get-Asset 'full-attribute.html' | Select-HtmlContent { $_ -like 'some link' }, 'div.some_class'
+                    } | should -throw
+                }
+                It 'pipes between scriptblock and property throws' {
+                    {
+                        Get-Asset 'full-attribute.html' | Select-HtmlContent { $_ -like 'some link' }, ([AngleParse.Prop]::Element)
+                    } | should -throw
+                }
+                It 'pipes between scriptblock and regex throws' {
+                    {
+                        Get-Asset 'full-attribute.html' | Select-HtmlContent { $_ -like 'some link' }, ([regex]'(\w+)')
+                    } | should -throw
+                }
+                It 'pipes between scriptblock and scriptblock works' {
+                    $result = Get-Asset 'full-attribute.html' | Select-HtmlContent {
+                        $_ -like 'some link' ? 1 : 2
+                    }, { $_ * 2 }
+                    $result | should -be 2
+                }
+            }
         }
     }
     Context 'PropertySelector' {
