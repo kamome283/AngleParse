@@ -160,6 +160,34 @@ Describe 'Select-HtmlContent' {
                 }
                 $result | should -be 1, 2
             }
+            Context 'property selector' {
+                It 'pipes between property and attribute throws' {
+                    {
+                        Get-Asset 'full-attribute.html' | Select-HtmlContent ([AngleParse.Prop]::Element), ([AngleParse.Attr]::Href)
+                    } | should -throw
+                }
+                It 'pipes between property and css selector throws' {
+                    {
+                        Get-Asset 'full-attribute.html' | Select-HtmlContent ([AngleParse.Prop]::Element), 'div.some_class'
+                    } | should -throw
+                }
+                It 'pipes between property and property throws' {
+                    {
+                        Get-Asset 'full-attribute.html' | Select-HtmlContent ([AngleParse.Prop]::Element), ([AngleParse.Prop]::Element)
+                    } | should -throw
+                }
+                It 'pipes between property and regex throws' {
+                    {
+                        Get-Asset 'full-attribute.html' | Select-HtmlContent ([AngleParse.Prop]::Element), ([regex]'(\w+)')
+                    } | should -throw
+                }
+                It 'pipes between property and scriptblock works' {
+                    $result = Get-Asset 'full-attribute.html' | Select-HtmlContent ([AngleParse.Prop]'TextContent'), {
+                        $_ -like 'some link' ? 1 : 2
+                    }
+                    $result | should -be 1
+                }
+            }
         }
     }
     Context 'PropertySelector' {
