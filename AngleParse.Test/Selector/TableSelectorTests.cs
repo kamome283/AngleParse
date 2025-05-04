@@ -86,7 +86,7 @@ public class SelectionTests
             "span.mw-headline",
             new Hashtable
             {
-                { "class", Attr.Class },
+                { "class", Attr.ClassName },
                 { "text", Attr.TextContent }
             }
         });

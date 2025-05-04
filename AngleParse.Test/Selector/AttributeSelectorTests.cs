@@ -69,7 +69,7 @@ public sealed class AttributeSelectorTests
     [Fact]
     public async Task SelectClass()
     {
-        AttributeSelector selector = SelectorFactory.CreateSelector(Attr.Class);
+        AttributeSelector selector = SelectorFactory.CreateSelector(Attr.ClassName);
         var (fullAttribute, noAttribute) = await CreateElementResourcesAsync();
         Assert.Single(
             selector.Select(fullAttribute).Select(r => r.String),

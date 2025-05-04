@@ -13,7 +13,7 @@ internal sealed class AttributeSelector(Attr attr) : ISelector<ElementResource, 
             _ when attr == Attr.OuterHtml => WrapToResources(resource.Element.OuterHtml),
             _ when attr == Attr.TextContent => WrapToResources(resource.Element.TextContent),
             _ when attr == Attr.Id => WrapToResources(resource.Element.Id),
-            _ when attr == Attr.Class => WrapToResources(resource.Element.ClassName),
+            _ when attr == Attr.ClassName => WrapToResources(resource.Element.ClassName),
             _ when attr == Attr.SplitClasses => resource.Element.ClassList.SelectMany(
                 WrapToResources),
             _ => WrapToResources(resource.Element.Attributes[attr.Value]?.Value)
