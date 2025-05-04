@@ -6,7 +6,7 @@ public sealed record Attr(string Value)
     public static Attr OuterHtml => new("'<>OuterHtml");
     public static Attr TextContent => new("'<>TextContent");
     public static Attr Id => new("'<>Id");
-    public static Attr Class => new("'<>class");
+    public static Attr ClassName => new("'<>class");
     public static Attr SplitClasses => new("'<>splitClasses");
     public static Attr Href => new("href");
     public static Attr Src => new("src");
