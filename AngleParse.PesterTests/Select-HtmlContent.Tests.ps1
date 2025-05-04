@@ -106,6 +106,62 @@ Describe 'Select-HtmlContent' {
             $result | should -be $null
         }
     }
+    Context 'FuncSelector' {
+        Context 'attribute selector' {
+            It 'pipes between attribute and attribute throws' {
+                {
+                    Get-Asset 'full-attribute.html' | Select-HtmlContent ([AngleParse.Attr]::Href), ([AngleParse.Attr]::Src)
+                } | should -throw
+            }
+            It 'pipes between attribute and css selector throws' {
+                {
+                    Get-Asset 'full-attribute.html' | Select-HtmlContent ([AngleParse.Attr]::Href), 'div.some_class'
+                } | should -throw
+            }
+            It 'pipes between attribute and property throws' {
+                {
+                    Get-Asset 'full-attribute.html' | Select-HtmlContent ([AngleParse.Attr]::Href), ([AngleParse.Prop]::Element)
+                } | should -throw
+            }
+            It 'pipes between attribute and regex works' {
+                $result = Get-Asset 'full-attribute.html' | Select-HtmlContent ([AngleParse.Attr]::ClassName), ([regex]'(\w+)')
+                $result | should -be 'some_class', 'another_class'
+            }
+            It 'pipes between attribute and scriptblock works' {
+                $result = Get-Asset 'full-attribute.html' | Select-HtmlContent ([AngleParse.Attr]::ClassName), {
+                    $_ -like 'some_class*' ? 1 : 2
+                }
+                $result | should -be 1
+            }
+        }
+        Context 'css selector' {
+            It 'pipes between css selector and attribute works' {
+                $result = Get-Asset 'full.html' | Select-HtmlContent 'section#fragment > div.some_class', ([AngleParse.Attr]::ClassName)
+                $result | should -be 'some_class', 'some_class'
+            }
+            It 'pipes between css selector and css selector works' {
+                $result = Get-Asset 'full.html' | Select-HtmlContent 'section#fragment > div.some_class', 'a'
+                $result.Length | should -be 10
+            }
+            It 'pipes between css selctor and property works' {
+                $result = Get-Asset 'full.html' | Select-HtmlContent 'section#fragment > div.some_class', ([AngleParse.Prop]::Element)
+                $result.Length | should -be 2
+                $result | should -beOfType AngleSharp.Dom.IElement
+            }
+            It 'pipes between css selector and regex works' {
+                $result = Get-Asset 'full.html' |
+                        Select-HtmlContent 'section#fragment > div.some_class', ([regex]'Windows Server (\d{4})')
+
+                $result | should -be 2003, 2008
+            }
+            It 'pipes between css selector and scriptblock works' {
+                $result = Get-Asset 'full.html' | Select-HtmlContent 'section#fragment > div.some_class', {
+                    $_ -match 'Windows Server' ? 1 : 2
+                }
+                $result | should -be 1, 2
+            }
+        }
+    }
     Context 'PropertySelector' {
         It 'retunrs inner IElement when the selector is Prop.Element' {
             $result = Get-Asset 'full.html' | Select-HtmlContent ([AngleParse.Prop]::Element)
