@@ -110,25 +110,25 @@ Describe 'Select-HtmlContent' {
         Context 'attribute selector' {
             It 'pipes between attribute and attribute throws' {
                 {
-                    Get-Asset 'full-attribute.html' | Select-HtmlContent ([AngleParse.Attr]::Href), ([AngleParse.Attr]::Src)
+                    Get-Asset 'full-attribute.html' | Select-HtmlContent ([AngleParse.Attr]::Href) ([AngleParse.Attr]::Src)
                 } | should -throw
             }
             It 'pipes between attribute and css selector throws' {
                 {
-                    Get-Asset 'full-attribute.html' | Select-HtmlContent ([AngleParse.Attr]::Href), 'div.some_class'
+                    Get-Asset 'full-attribute.html' | Select-HtmlContent ([AngleParse.Attr]::Href) 'div.some_class'
                 } | should -throw
             }
             It 'pipes between attribute and property throws' {
                 {
-                    Get-Asset 'full-attribute.html' | Select-HtmlContent ([AngleParse.Attr]::Href), ([AngleParse.Prop]::Element)
+                    Get-Asset 'full-attribute.html' | Select-HtmlContent ([AngleParse.Attr]::Href) ([AngleParse.Prop]::Element)
                 } | should -throw
             }
             It 'pipes between attribute and regex works' {
-                $result = Get-Asset 'full-attribute.html' | Select-HtmlContent ([AngleParse.Attr]::ClassName), ([regex]'(\w+)')
+                $result = Get-Asset 'full-attribute.html' | Select-HtmlContent ([AngleParse.Attr]::ClassName) ([regex]'(\w+)')
                 $result | should -be 'some_class', 'another_class'
             }
             It 'pipes between attribute and scriptblock works' {
-                $result = Get-Asset 'full-attribute.html' | Select-HtmlContent ([AngleParse.Attr]::ClassName), {
+                $result = Get-Asset 'full-attribute.html' | Select-HtmlContent ([AngleParse.Attr]::ClassName) {
                     $_ -like 'some_class*' ? 1 : 2
                 }
                 $result | should -be 1
@@ -136,26 +136,26 @@ Describe 'Select-HtmlContent' {
         }
         Context 'css selector' {
             It 'pipes between css selector and attribute works' {
-                $result = Get-Asset 'full.html' | Select-HtmlContent 'section#fragment > div.some_class', ([AngleParse.Attr]::ClassName)
+                $result = Get-Asset 'full.html' | Select-HtmlContent 'section#fragment > div.some_class' ([AngleParse.Attr]::ClassName)
                 $result | should -be 'some_class', 'some_class'
             }
             It 'pipes between css selector and css selector works' {
-                $result = Get-Asset 'full.html' | Select-HtmlContent 'section#fragment > div.some_class', 'a'
+                $result = Get-Asset 'full.html' | Select-HtmlContent 'section#fragment > div.some_class' 'a'
                 $result.Length | should -be 10
             }
             It 'pipes between css selctor and property works' {
-                $result = Get-Asset 'full.html' | Select-HtmlContent 'section#fragment > div.some_class', ([AngleParse.Prop]::Element)
+                $result = Get-Asset 'full.html' | Select-HtmlContent 'section#fragment > div.some_class' ([AngleParse.Prop]::Element)
                 $result.Length | should -be 2
                 $result | should -beOfType AngleSharp.Dom.IElement
             }
             It 'pipes between css selector and regex works' {
                 $result = Get-Asset 'full.html' |
-                        Select-HtmlContent 'section#fragment > div.some_class', ([regex]'Windows Server (\d{4})')
+                        Select-HtmlContent 'section#fragment > div.some_class' ([regex]'Windows Server (\d{4})')
 
                 $result | should -be 2003, 2008
             }
             It 'pipes between css selector and scriptblock works' {
-                $result = Get-Asset 'full.html' | Select-HtmlContent 'section#fragment > div.some_class', {
+                $result = Get-Asset 'full.html' | Select-HtmlContent 'section#fragment > div.some_class' {
                     $_ -match 'Windows Server' ? 1 : 2
                 }
                 $result | should -be 1, 2
@@ -163,26 +163,26 @@ Describe 'Select-HtmlContent' {
             Context 'property selector' {
                 It 'pipes between property and attribute throws' {
                     {
-                        Get-Asset 'full-attribute.html' | Select-HtmlContent ([AngleParse.Prop]::Element), ([AngleParse.Attr]::Href)
+                        Get-Asset 'full-attribute.html' | Select-HtmlContent ([AngleParse.Prop]::Element) ([AngleParse.Attr]::Href)
                     } | should -throw
                 }
                 It 'pipes between property and css selector throws' {
                     {
-                        Get-Asset 'full-attribute.html' | Select-HtmlContent ([AngleParse.Prop]::Element), 'div.some_class'
+                        Get-Asset 'full-attribute.html' | Select-HtmlContent ([AngleParse.Prop]::Element) 'div.some_class'
                     } | should -throw
                 }
                 It 'pipes between property and property throws' {
                     {
-                        Get-Asset 'full-attribute.html' | Select-HtmlContent ([AngleParse.Prop]::Element), ([AngleParse.Prop]::Element)
+                        Get-Asset 'full-attribute.html' | Select-HtmlContent ([AngleParse.Prop]::Element) ([AngleParse.Prop]::Element)
                     } | should -throw
                 }
                 It 'pipes between property and regex throws' {
                     {
-                        Get-Asset 'full-attribute.html' | Select-HtmlContent ([AngleParse.Prop]::Element), ([regex]'(\w+)')
+                        Get-Asset 'full-attribute.html' | Select-HtmlContent ([AngleParse.Prop]::Element) ([regex]'(\w+)')
                     } | should -throw
                 }
                 It 'pipes between property and scriptblock works' {
-                    $result = Get-Asset 'full-attribute.html' | Select-HtmlContent ([AngleParse.Prop]'TextContent'), {
+                    $result = Get-Asset 'full-attribute.html' | Select-HtmlContent ([AngleParse.Prop]'TextContent') {
                         $_ -like 'some link' ? 1 : 2
                     }
                     $result | should -be 1
@@ -191,25 +191,25 @@ Describe 'Select-HtmlContent' {
             Context 'regex selector' {
                 It 'pipes between regex and attribute throws' {
                     {
-                        Get-Asset 'full-attribute.html' | Select-HtmlContent ([regex]'(\w+)'), ([AngleParse.Attr]::Href)
+                        Get-Asset 'full-attribute.html' | Select-HtmlContent ([regex]'(\w+)') ([AngleParse.Attr]::Href)
                     } | should -throw
                 }
                 It 'pipes between regex and css selector throws' {
                     {
-                        Get-Asset 'full-attribute.html' | Select-HtmlContent ([regex]'(\w+)'), 'div.some_class'
+                        Get-Asset 'full-attribute.html' | Select-HtmlContent ([regex]'(\w+)') 'div.some_class'
                     } | should -throw
                 }
                 It 'pipes between regex and property throws' {
                     {
-                        Get-Asset 'full-attribute.html' | Select-HtmlContent ([regex]'(\w+)'), ([AngleParse.Prop]::Element)
+                        Get-Asset 'full-attribute.html' | Select-HtmlContent ([regex]'(\w+)') ([AngleParse.Prop]::Element)
                     } | should -throw
                 }
                 It 'pipes between regex and regex works' {
-                    $result = Get-Asset 'full.html' | Select-HtmlContent ([regex]'(\w+ \d{4})'), ([regex]'(\d{4})')
+                    $result = Get-Asset 'full.html' | Select-HtmlContent ([regex]'(\w+ \d{4})') ([regex]'(\d{4})')
                     $result | should -be 2006, 2003, 2008, 2016, 2018
                 }
                 It 'pipes between regex and scriptblock works' {
-                    $result = Get-Asset 'full.html' | Select-HtmlContent ([regex]'(\w+ \d{4})'), {
+                    $result = Get-Asset 'full.html' | Select-HtmlContent ([regex]'(\w+ \d{4})') {
                         $_ -like 'November*' ? 1 : 2
                     }
                     $result | should -be 1, 2, 2, 2, 2
@@ -218,28 +218,28 @@ Describe 'Select-HtmlContent' {
             Context 'scriptblock selector' {
                 It 'pipes between scriptblock and attribute throws' {
                     {
-                        Get-Asset 'full-attribute.html' | Select-HtmlContent { $_ -like 'some link' }, ([AngleParse.Attr]::Href)
+                        Get-Asset 'full-attribute.html' | Select-HtmlContent { $_ -like 'some link' } ([AngleParse.Attr]::Href)
                     } | should -throw
                 }
                 It 'pipes between scriptblock and css selector throws' {
                     {
-                        Get-Asset 'full-attribute.html' | Select-HtmlContent { $_ -like 'some link' }, 'div.some_class'
+                        Get-Asset 'full-attribute.html' | Select-HtmlContent { $_ -like 'some link' } 'div.some_class'
                     } | should -throw
                 }
                 It 'pipes between scriptblock and property throws' {
                     {
-                        Get-Asset 'full-attribute.html' | Select-HtmlContent { $_ -like 'some link' }, ([AngleParse.Prop]::Element)
+                        Get-Asset 'full-attribute.html' | Select-HtmlContent { $_ -like 'some link' } ([AngleParse.Prop]::Element)
                     } | should -throw
                 }
                 It 'pipes between scriptblock and regex throws' {
                     {
-                        Get-Asset 'full-attribute.html' | Select-HtmlContent { $_ -like 'some link' }, ([regex]'(\w+)')
+                        Get-Asset 'full-attribute.html' | Select-HtmlContent { $_ -like 'some link' } ([regex]'(\w+)')
                     } | should -throw
                 }
                 It 'pipes between scriptblock and scriptblock works' {
                     $result = Get-Asset 'full-attribute.html' | Select-HtmlContent {
                         $_ -like 'some link' ? 1 : 2
-                    }, { $_ * 2 }
+                    } { $_ * 2 }
                     $result | should -be 2
                 }
             }
@@ -352,7 +352,7 @@ Describe 'Select-HtmlContent' {
         }
         It 'throws when input type does not satisfy the most strict type requirement in the table' {
             {
-                Get-Asset 'full-attribute.html' | Select-HtmlContent { $_ }, @{
+                Get-Asset 'full-attribute.html' | Select-HtmlContent { $_ } @{
                     SplitContent = { $_ -split ' ' }
                     SomeWhat = ([regex]'some (\w+)')
                 }

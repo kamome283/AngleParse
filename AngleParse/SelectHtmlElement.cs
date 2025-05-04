@@ -12,12 +12,11 @@ public sealed class SelectHtmlElement : PSCmdlet
 {
     [Parameter(
         Mandatory = true,
-        Position = 0,
+        ValueFromRemainingArguments = true,
         HelpMessage = "Selector to select and process data in the content.")]
     public object[]? Selector { get; set; }
 
     [Parameter(
-        Position = 1,
         ValueFromPipeline = true,
         ValueFromPipelineByPropertyName = true,
         HelpMessage = "HTML content.")]
