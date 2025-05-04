@@ -16,9 +16,20 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 9.x
+      - name: Install Pester module
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          Install-Module -Name Pester -RequiredVersion 5.7.1 -Force -SkipPublisherCheck -Scope CurrentUser
       - name: dotnet test
         run: |
           dotnet test ./AngleParse.Test/AngleParse.Test.csproj -c Release
+      - name: run pester tests
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          Import-Module Pester -Force
+          Invoke-Pester -Path ./AngleParse.PesterTests/
       - name: dotnet publish
         run: |
           dotnet publish ./AngleParse/AngleParse.csproj -c Release
