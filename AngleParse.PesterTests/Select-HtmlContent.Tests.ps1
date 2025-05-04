@@ -133,6 +133,26 @@ Describe 'Select-HtmlContent' {
             } | should -throw
         }
     }
+    Context 'RegexSelector' {
+        It 'returns captured values when the regex matches' {
+            $result = Get-Asset 'full.html' | Select-HtmlContent ([regex]'(\w+) (\d{4})')
+            $result | should -be @(
+                "November", "2006",
+                "Server", "2003",
+                "Server", "2008",
+                "August", "2016",
+                "January", "2018"
+            )
+        }
+        It 'returns null when the regex has no capture groups' {
+            $result = Get-Asset 'full.html' | Select-HtmlContent ([regex]'\w+ \d{4}')
+            $result | should -be $null
+        }
+        It 'returns null when the regex does not match anything' {
+            $result = Get-Asset 'full.html' | Select-HtmlContent ([regex]'(nonexistent)')
+            $result | should -be $null
+        }
+    }
     Context 'ScriptBlockSelector' {
         It 'binds $_ in the scriptblock to the current element' {
             Get-Asset 'full-attribute.html' | Select-HtmlContent {
