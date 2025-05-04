@@ -20,7 +20,7 @@ jobs:
         shell: pwsh
         run: |
           $ErrorActionPreference = 'Stop'
-          Install-Module -Name Pester -Force -SkipPublisherCheck -Scope CurrentUser
+          Install-Module -Name Pester -RequiredVersion 5.7.1 -Force -SkipPublisherCheck -Scope CurrentUser
       - name: dotnet test
         run: |
           dotnet test ./AngleParse.Test/AngleParse.Test.csproj -c Release
