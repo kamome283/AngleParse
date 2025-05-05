@@ -355,4 +355,4 @@ Get-Content unification.html -raw |
 
 ## License
 
-MIT License
+Apache License 2.0
