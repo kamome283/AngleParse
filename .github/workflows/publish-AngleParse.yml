@@ -37,13 +37,11 @@ jobs:
         shell: pwsh
         env:
           CommitTag: ${{ github.ref_name }}
-          GH_TOKEN: ${{ github.token }}
         run: |
           $ErrorActionPreference = 'Stop'
           $moduleManifestPath = './AngleParse/bin/Release/AngleParse/AngleParse.psd1'
           $moduleVersion = $Env:CommitTag
-          $releaseNotes = gh release view $Env:CommitTag --json body | ConvertFrom-Json | ForEach-Object body
-
+          
           filter modify($key, $value)
           {
               $_ -replace "^\s*$key\s*=.*$", "$key = '$value'"
@@ -51,7 +49,6 @@ jobs:
 
           Get-Content $moduleManifestPath |
                   modify ModuleVersion $moduleVersion |
-                  modify ReleaseNotes $releaseNotes |
                   Set-Content $moduleManifestPath
       - name: Publish to PowerShell Gallery
         shell: pwsh
