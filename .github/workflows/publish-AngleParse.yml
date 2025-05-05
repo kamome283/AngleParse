@@ -40,7 +40,7 @@ jobs:
         run: |
           $ErrorActionPreference = 'Stop'
           $moduleManifestPath = './AngleParse/bin/Release/AngleParse/AngleParse.psd1'
-          $moduleVersion = $Env:CommitTag
+          $moduleVersion = $Env:CommitTag -replace '^v', ''
           
           filter modify($key, $value)
           {
