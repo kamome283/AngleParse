@@ -322,7 +322,8 @@ Describe 'Select-HtmlContent' {
         }
         It 'outputs the result even if the Write-Error is called in the scriptblock' {
             $result = Get-Asset 'full-attribute.html' | Select-HtmlContent {
-                Write-Error -Message "Error in scriptblock" 2> $null
+                # Override the error action to continue which is the default in PowerShell.
+                Write-Error -Message "Error in scriptblock" -ErrorAction 'Continue' 2> $null
                 return 1
             }
             $result | should -be 1
