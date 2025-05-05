@@ -63,4 +63,4 @@ jobs:
           if (-not (Test-Path $modulePath)) {
             throw "Module path $modulePath does not exist."
           }
-          Publish-Module -Path (Join-Path $modulePath 'AngleParse.psd1') -NuGetApiKey $env:PSGalleryApiKey
+          Publish-Module -Path $modulePath -NuGetApiKey $env:PSGalleryApiKey
