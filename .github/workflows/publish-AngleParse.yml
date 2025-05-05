@@ -39,7 +39,7 @@ jobs:
           CommitTag: ${{ github.ref_name }}
         run: |
           $ErrorActionPreference = 'Stop'
-          $moduleManifestPath = '/Users/tsubasa/Projects/AngleParse/AngleParse/bin/Release/AngleParse/AngleParse.psd1'
+          $moduleManifestPath = './AngleParse/bin/Release/AngleParse/AngleParse.psd1'
           $moduleVersion = $Env:CommitTag
           $releaseNotes = gh release view $Env:CommitTag --json body | ConvertFrom-Json | ForEach-Object body
 
