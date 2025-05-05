@@ -28,6 +28,7 @@ Select-HtmlContent 'div.stats-table tr:not(:first-child)' @{
 - [Breaking Changes before v0.4](#breaking-changes-before-v04)
 - [Installation](#installation)
 - [Usage](#usage)
+- [How selectors work](#how-selectors-work)
 - [Selector Reference](#selector-reference)
     - [CSS Selector](#css-selector)
     - [Attribute Selector](#attribute-selector)
