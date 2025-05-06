@@ -304,10 +304,10 @@ Get-Content table_selector.html -raw |
     NumPlus1 = ([regex]'(\d)\w'), { [int]$_ + 1 }
   }
 # Output:
-# Class Number
-# ----- ------
-# a     2
-# b     3
+# ClassName Number
+# --------- ------
+# a         2
+# b         3
 
 # This throws an error because the input type is string,
 # though the most strict type required in the each branch is Element that is subtype of string.
