@@ -300,7 +300,7 @@ Hashtables are interpreted as table selectors.
 ```powershell
 Get-Content table_selector.html -raw |
   Select-HtmlContent @{
-    Class = ([AngleParse.Attr]::Class);
+    ClassName = ([AngleParse.Attr]::ClassName);
     NumPlus1 = ([regex]'(\d)\w'), { [int]$_ + 1 }
   }
 # Output:
