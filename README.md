@@ -314,7 +314,7 @@ Get-Content table_selector.html -raw |
 # This does not conform to type constraint.
 Get-Content table_selector.html -raw |
   Select-HtmlContent ([regex]'.*') @{
-    Class = ([AngleParse.Attr]::Class);
+    ClassName = ([AngleParse.Attr]::ClassName);
     NumPlus1 = ([regex]'(\d)\w'), { [int]$_ + 1 }
   }
 ```
